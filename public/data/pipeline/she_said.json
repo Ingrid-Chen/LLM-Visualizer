@@ -1,0 +1,90 @@
+{
+  "example_id": "she_said",
+  "prompt": "她说：",
+  "prompt_zh_label": "她说：___",
+  "steps": {
+    "tokenization": {
+      "tokens": [
+        "她",
+        "说",
+        "："
+      ],
+      "token_ids": [
+        10186,
+        1810,
+        8326
+      ]
+    },
+    "embedding": {
+      "dim": 1536,
+      "sample_first_token": [
+        -0.329,
+        0.072,
+        0.439,
+        0.599,
+        0.478,
+        0.132,
+        -0.276,
+        -0.554
+      ]
+    },
+    "positional_encoding": {
+      "positions": [
+        0,
+        1,
+        2
+      ]
+    },
+    "transformer": {
+      "layers": 32,
+      "heads": 32,
+      "attention_sample": {
+        "from_token": "：",
+        "weights": [
+          {
+            "to": "她",
+            "w": 0.18
+          },
+          {
+            "to": "说",
+            "w": 0.7
+          },
+          {
+            "to": "：",
+            "w": 0.12
+          }
+        ]
+      }
+    },
+    "logits_top": [
+      {
+        "token": "\"",
+        "prob": 0.30048793953280534
+      },
+      {
+        "token": "「",
+        "prob": 0.22036292136405244
+      },
+      {
+        "token": "你",
+        "prob": 0.19245814250929277
+      },
+      {
+        "token": "我",
+        "prob": 0.15802068591179555
+      },
+      {
+        "token": "请",
+        "prob": 0.12867031068205406
+      }
+    ],
+    "sampling": {
+      "selected_token": "\"",
+      "method": "greedy"
+    },
+    "detokenization": {
+      "decoded_text": "\"",
+      "will_loop": true
+    }
+  }
+}

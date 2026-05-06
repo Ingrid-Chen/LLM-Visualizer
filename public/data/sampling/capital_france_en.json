@@ -1,0 +1,706 @@
+{
+  "id": "capital_france_en",
+  "prompt": "The capital of France is",
+  "prompt_zh_label": "The capital of France is ___",
+  "category": "high_certainty",
+  "model": "mock-v0.1",
+  "generated_at": "2026-05-03",
+  "steps": [
+    {
+      "step_index": 0,
+      "prompt_so_far": "The capital of France is",
+      "top_logprobs": [
+        {
+          "token": " Paris",
+          "logprob": 0.000057067249667623436
+        },
+        {
+          "token": " Lyon",
+          "logprob": -7.480430854817439
+        },
+        {
+          "token": " Marseille",
+          "logprob": -8.208551929617729
+        },
+        {
+          "token": " Bordeaux",
+          "logprob": -9.049875502016695
+        },
+        {
+          "token": " Nice",
+          "logprob": -9.856745124495378
+        },
+        {
+          "token": " Versailles",
+          "logprob": -10.321238398671332
+        },
+        {
+          "token": " Toulouse",
+          "logprob": -10.88430348845127
+        },
+        {
+          "token": " French",
+          "logprob": -11.488535612697826
+        },
+        {
+          "token": " a",
+          "logprob": -12.029054070267776
+        },
+        {
+          "token": " the",
+          "logprob": -12.559130913052263
+        },
+        {
+          "token": " an",
+          "logprob": -13.044079994707104
+        },
+        {
+          "token": " often",
+          "logprob": -13.401258800526728
+        },
+        {
+          "token": " home",
+          "logprob": -13.780050911713985
+        },
+        {
+          "token": " known",
+          "logprob": -14.20491434536465
+        },
+        {
+          "token": " and",
+          "logprob": -14.647175323968053
+        },
+        {
+          "token": " to",
+          "logprob": -14.958096335445898
+        },
+        {
+          "token": " of",
+          "logprob": -15.225082713361239
+        },
+        {
+          "token": " in",
+          "logprob": -15.48620744746188
+        },
+        {
+          "token": " is",
+          "logprob": -15.786303473565457
+        },
+        {
+          "token": " that",
+          "logprob": -16.025260049480533
+        }
+      ],
+      "greedy_token": " Paris"
+    },
+    {
+      "step_index": 1,
+      "prompt_so_far": "The capital of France is Paris",
+      "top_logprobs": [
+        {
+          "token": ".",
+          "logprob": 0.014071533905952368
+        },
+        {
+          "token": ",",
+          "logprob": -7.483467706739513
+        },
+        {
+          "token": " and",
+          "logprob": -8.208551929617729
+        },
+        {
+          "token": "!",
+          "logprob": -9.05852326014566
+        },
+        {
+          "token": " (",
+          "logprob": -9.856745124495378
+        },
+        {
+          "token": "...",
+          "logprob": -10.280564035844591
+        },
+        {
+          "token": "—",
+          "logprob": -10.904593107912973
+        },
+        {
+          "token": ":",
+          "logprob": -11.518478765907954
+        },
+        {
+          "token": "?",
+          "logprob": -12.012540097531918
+        },
+        {
+          "token": "\"",
+          "logprob": -12.511256476980012
+        },
+        {
+          "token": " the",
+          "logprob": -13.044079994707104
+        },
+        {
+          "token": " a",
+          "logprob": -13.401258800526728
+        },
+        {
+          "token": " to",
+          "logprob": -13.780050911713985
+        },
+        {
+          "token": " of",
+          "logprob": -14.20491434536465
+        },
+        {
+          "token": " in",
+          "logprob": -14.647175323968053
+        },
+        {
+          "token": " is",
+          "logprob": -14.958096335445898
+        },
+        {
+          "token": " that",
+          "logprob": -15.225082713361239
+        },
+        {
+          "token": " it",
+          "logprob": -15.48620744746188
+        },
+        {
+          "token": " for",
+          "logprob": -15.786303473565457
+        },
+        {
+          "token": " was",
+          "logprob": -16.025260049480533
+        }
+      ],
+      "greedy_token": "."
+    },
+    {
+      "step_index": 2,
+      "prompt_so_far": "The capital of France is Paris.",
+      "top_logprobs": [
+        {
+          "token": " It",
+          "logprob": 0.000057067249667623436
+        },
+        {
+          "token": " Paris",
+          "logprob": -7.480430854817439
+        },
+        {
+          "token": " The",
+          "logprob": -8.208551929617729
+        },
+        {
+          "token": " Located",
+          "logprob": -9.049875502016695
+        },
+        {
+          "token": " Famous",
+          "logprob": -9.856745124495378
+        },
+        {
+          "token": " A",
+          "logprob": -10.321238398671332
+        },
+        {
+          "token": " As",
+          "logprob": -10.88430348845127
+        },
+        {
+          "token": " With",
+          "logprob": -11.488535612697826
+        },
+        {
+          "token": " This",
+          "logprob": -12.029054070267776
+        },
+        {
+          "token": " Known",
+          "logprob": -12.559130913052263
+        },
+        {
+          "token": " Home",
+          "logprob": -13.044079994707104
+        },
+        {
+          "token": " One",
+          "logprob": -13.401258800526728
+        },
+        {
+          "token": " the",
+          "logprob": -13.780050911713985
+        },
+        {
+          "token": " a",
+          "logprob": -14.20491434536465
+        },
+        {
+          "token": " and",
+          "logprob": -14.647175323968053
+        },
+        {
+          "token": " to",
+          "logprob": -14.958096335445898
+        },
+        {
+          "token": " of",
+          "logprob": -15.225082713361239
+        },
+        {
+          "token": " in",
+          "logprob": -15.48620744746188
+        },
+        {
+          "token": " is",
+          "logprob": -15.786303473565457
+        },
+        {
+          "token": " that",
+          "logprob": -16.025260049480533
+        }
+      ],
+      "greedy_token": " It"
+    },
+    {
+      "step_index": 3,
+      "prompt_so_far": "The capital of France is Paris. It",
+      "top_logprobs": [
+        {
+          "token": " is",
+          "logprob": 0.000057067249667623436
+        },
+        {
+          "token": "'s",
+          "logprob": -7.494015485532552
+        },
+        {
+          "token": " has",
+          "logprob": -8.208551929617729
+        },
+        {
+          "token": " contains",
+          "logprob": -9.049875502016695
+        },
+        {
+          "token": " sits",
+          "logprob": -9.856745124495378
+        },
+        {
+          "token": " lies",
+          "logprob": -10.321238398671332
+        },
+        {
+          "token": " offers",
+          "logprob": -10.88430348845127
+        },
+        {
+          "token": " features",
+          "logprob": -11.488535612697826
+        },
+        {
+          "token": " stands",
+          "logprob": -12.029054070267776
+        },
+        {
+          "token": " was",
+          "logprob": -12.559130913052263
+        },
+        {
+          "token": " serves",
+          "logprob": -13.044079994707104
+        },
+        {
+          "token": " the",
+          "logprob": -13.401258800526728
+        },
+        {
+          "token": " a",
+          "logprob": -13.780050911713985
+        },
+        {
+          "token": " and",
+          "logprob": -14.20491434536465
+        },
+        {
+          "token": " to",
+          "logprob": -14.647175323968053
+        },
+        {
+          "token": " of",
+          "logprob": -14.958096335445898
+        },
+        {
+          "token": " in",
+          "logprob": -15.225082713361239
+        },
+        {
+          "token": " that",
+          "logprob": -15.48620744746188
+        },
+        {
+          "token": " it",
+          "logprob": -15.786303473565457
+        },
+        {
+          "token": " for",
+          "logprob": -16.025260049480533
+        }
+      ],
+      "greedy_token": " is"
+    },
+    {
+      "step_index": 4,
+      "prompt_so_far": "The capital of France is Paris. It is",
+      "top_logprobs": [
+        {
+          "token": " known",
+          "logprob": 0.000057067249667623436
+        },
+        {
+          "token": " famous",
+          "logprob": -7.480430854817439
+        },
+        {
+          "token": " home",
+          "logprob": -8.208551929617729
+        },
+        {
+          "token": " the",
+          "logprob": -9.049875502016695
+        },
+        {
+          "token": " one",
+          "logprob": -9.856745124495378
+        },
+        {
+          "token": " considered",
+          "logprob": -10.321238398671332
+        },
+        {
+          "token": " often",
+          "logprob": -10.88430348845127
+        },
+        {
+          "token": " widely",
+          "logprob": -11.488535612697826
+        },
+        {
+          "token": " a",
+          "logprob": -12.029054070267776
+        },
+        {
+          "token": " an",
+          "logprob": -12.559130913052263
+        },
+        {
+          "token": " loved",
+          "logprob": -13.044079994707104
+        },
+        {
+          "token": " and",
+          "logprob": -13.401258800526728
+        },
+        {
+          "token": " to",
+          "logprob": -13.780050911713985
+        },
+        {
+          "token": " of",
+          "logprob": -14.20491434536465
+        },
+        {
+          "token": " in",
+          "logprob": -14.647175323968053
+        },
+        {
+          "token": " is",
+          "logprob": -14.958096335445898
+        },
+        {
+          "token": " that",
+          "logprob": -15.225082713361239
+        },
+        {
+          "token": " it",
+          "logprob": -15.48620744746188
+        },
+        {
+          "token": " for",
+          "logprob": -15.786303473565457
+        },
+        {
+          "token": " was",
+          "logprob": -16.025260049480533
+        }
+      ],
+      "greedy_token": " known"
+    },
+    {
+      "step_index": 5,
+      "prompt_so_far": "The capital of France is Paris. It is known",
+      "top_logprobs": [
+        {
+          "token": " for",
+          "logprob": 0.000057067249667623436
+        },
+        {
+          "token": " as",
+          "logprob": -7.480430854817439
+        },
+        {
+          "token": " around",
+          "logprob": -8.208551929617729
+        },
+        {
+          "token": " worldwide",
+          "logprob": -9.049875502016695
+        },
+        {
+          "token": " globally",
+          "logprob": -9.856745124495378
+        },
+        {
+          "token": " throughout",
+          "logprob": -10.321238398671332
+        },
+        {
+          "token": " by",
+          "logprob": -10.88430348845127
+        },
+        {
+          "token": " among",
+          "logprob": -11.488535612697826
+        },
+        {
+          "token": " across",
+          "logprob": -12.029054070267776
+        },
+        {
+          "token": " to",
+          "logprob": -12.559130913052263
+        },
+        {
+          "token": " the",
+          "logprob": -13.044079994707104
+        },
+        {
+          "token": " a",
+          "logprob": -13.401258800526728
+        },
+        {
+          "token": " and",
+          "logprob": -13.780050911713985
+        },
+        {
+          "token": " of",
+          "logprob": -14.20491434536465
+        },
+        {
+          "token": " in",
+          "logprob": -14.647175323968053
+        },
+        {
+          "token": " is",
+          "logprob": -14.958096335445898
+        },
+        {
+          "token": " that",
+          "logprob": -15.225082713361239
+        },
+        {
+          "token": " it",
+          "logprob": -15.48620744746188
+        },
+        {
+          "token": " was",
+          "logprob": -15.786303473565457
+        },
+        {
+          "token": " on",
+          "logprob": -16.025260049480533
+        }
+      ],
+      "greedy_token": " for"
+    },
+    {
+      "step_index": 6,
+      "prompt_so_far": "The capital of France is Paris. It is known for",
+      "top_logprobs": [
+        {
+          "token": " its",
+          "logprob": 0.000057067249667623436
+        },
+        {
+          "token": " being",
+          "logprob": -7.480430854817439
+        },
+        {
+          "token": " the",
+          "logprob": -8.208551929617729
+        },
+        {
+          "token": " several",
+          "logprob": -9.049875502016695
+        },
+        {
+          "token": " a",
+          "logprob": -9.856745124495378
+        },
+        {
+          "token": " an",
+          "logprob": -10.321238398671332
+        },
+        {
+          "token": " many",
+          "logprob": -10.88430348845127
+        },
+        {
+          "token": " centuries",
+          "logprob": -11.488535612697826
+        },
+        {
+          "token": " over",
+          "logprob": -12.029054070267776
+        },
+        {
+          "token": " having",
+          "logprob": -12.559130913052263
+        },
+        {
+          "token": " and",
+          "logprob": -13.044079994707104
+        },
+        {
+          "token": " to",
+          "logprob": -13.401258800526728
+        },
+        {
+          "token": " of",
+          "logprob": -13.780050911713985
+        },
+        {
+          "token": " in",
+          "logprob": -14.20491434536465
+        },
+        {
+          "token": " is",
+          "logprob": -14.647175323968053
+        },
+        {
+          "token": " that",
+          "logprob": -14.958096335445898
+        },
+        {
+          "token": " it",
+          "logprob": -15.225082713361239
+        },
+        {
+          "token": " for",
+          "logprob": -15.48620744746188
+        },
+        {
+          "token": " was",
+          "logprob": -15.786303473565457
+        },
+        {
+          "token": " on",
+          "logprob": -16.025260049480533
+        }
+      ],
+      "greedy_token": " its"
+    },
+    {
+      "step_index": 7,
+      "prompt_so_far": "The capital of France is Paris. It is known for its",
+      "top_logprobs": [
+        {
+          "token": " iconic",
+          "logprob": 0.000057067249667623436
+        },
+        {
+          "token": " famous",
+          "logprob": -7.480430854817439
+        },
+        {
+          "token": " art",
+          "logprob": -8.208551929617729
+        },
+        {
+          "token": " rich",
+          "logprob": -9.049875502016695
+        },
+        {
+          "token": " cultural",
+          "logprob": -9.856745124495378
+        },
+        {
+          "token": " stunning",
+          "logprob": -10.321238398671332
+        },
+        {
+          "token": " beautiful",
+          "logprob": -10.88430348845127
+        },
+        {
+          "token": " centuries",
+          "logprob": -11.488535612697826
+        },
+        {
+          "token": " ancient",
+          "logprob": -12.029054070267776
+        },
+        {
+          "token": " museums",
+          "logprob": -12.559130913052263
+        },
+        {
+          "token": " architecture",
+          "logprob": -13.044079994707104
+        },
+        {
+          "token": " the",
+          "logprob": -13.401258800526728
+        },
+        {
+          "token": " a",
+          "logprob": -13.780050911713985
+        },
+        {
+          "token": " and",
+          "logprob": -14.20491434536465
+        },
+        {
+          "token": " to",
+          "logprob": -14.647175323968053
+        },
+        {
+          "token": " of",
+          "logprob": -14.958096335445898
+        },
+        {
+          "token": " in",
+          "logprob": -15.225082713361239
+        },
+        {
+          "token": " is",
+          "logprob": -15.48620744746188
+        },
+        {
+          "token": " that",
+          "logprob": -15.786303473565457
+        },
+        {
+          "token": " it",
+          "logprob": -16.025260049480533
+        }
+      ],
+      "greedy_token": " iconic"
+    }
+  ]
+}

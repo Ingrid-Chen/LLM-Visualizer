@@ -1,0 +1,706 @@
+{
+  "id": "pizza_emoji",
+  "prompt": "I love pizza 🍕 because",
+  "prompt_zh_label": "I love pizza 🍕 because ___",
+  "category": "medium_certainty",
+  "model": "mock-v0.1",
+  "generated_at": "2026-05-03",
+  "steps": [
+    {
+      "step_index": 0,
+      "prompt_so_far": "I love pizza 🍕 because",
+      "top_logprobs": [
+        {
+          "token": " it",
+          "logprob": -0.7979429327503325
+        },
+        {
+          "token": " of",
+          "logprob": -1.3804308548174393
+        },
+        {
+          "token": " pizza",
+          "logprob": -1.9085519296177298
+        },
+        {
+          "token": " I",
+          "logprob": -2.449875502016695
+        },
+        {
+          "token": " they",
+          "logprob": -2.8567451244953763
+        },
+        {
+          "token": " its",
+          "logprob": -3.221238398671331
+        },
+        {
+          "token": " every",
+          "logprob": -3.58430348845127
+        },
+        {
+          "token": " the",
+          "logprob": -3.9885356126978255
+        },
+        {
+          "token": " you",
+          "logprob": -4.329054070267776
+        },
+        {
+          "token": " all",
+          "logprob": -4.759130913052262
+        },
+        {
+          "token": " who",
+          "logprob": -5.044079994707104
+        },
+        {
+          "token": " when",
+          "logprob": -5.301258800526727
+        },
+        {
+          "token": " food",
+          "logprob": -5.580050911713983
+        },
+        {
+          "token": " a",
+          "logprob": -5.90491434536465
+        },
+        {
+          "token": " and",
+          "logprob": -6.147175323968052
+        },
+        {
+          "token": " to",
+          "logprob": -6.3580963354458975
+        },
+        {
+          "token": " is",
+          "logprob": -6.525082713361241
+        },
+        {
+          "token": " for",
+          "logprob": -6.68620744746188
+        },
+        {
+          "token": " that",
+          "logprob": -6.886303473565457
+        },
+        {
+          "token": " on",
+          "logprob": -7.025260049480532
+        }
+      ],
+      "greedy_token": " it"
+    },
+    {
+      "step_index": 1,
+      "prompt_so_far": "I love pizza 🍕 because it",
+      "top_logprobs": [
+        {
+          "token": "'s",
+          "logprob": -0.7814481845486365
+        },
+        {
+          "token": " is",
+          "logprob": -1.3804308548174393
+        },
+        {
+          "token": " has",
+          "logprob": -1.9085519296177298
+        },
+        {
+          "token": " can",
+          "logprob": -2.449875502016695
+        },
+        {
+          "token": " brings",
+          "logprob": -2.8567451244953763
+        },
+        {
+          "token": " makes",
+          "logprob": -3.221238398671331
+        },
+        {
+          "token": " offers",
+          "logprob": -3.58430348845127
+        },
+        {
+          "token": " feels",
+          "logprob": -3.9885356126978255
+        },
+        {
+          "token": " tastes",
+          "logprob": -4.329054070267776
+        },
+        {
+          "token": " smells",
+          "logprob": -4.759130913052262
+        },
+        {
+          "token": " comes",
+          "logprob": -5.044079994707104
+        },
+        {
+          "token": " always",
+          "logprob": -5.301258800526727
+        },
+        {
+          "token": " it",
+          "logprob": -5.580050911713983
+        },
+        {
+          "token": " the",
+          "logprob": -5.90491434536465
+        },
+        {
+          "token": " a",
+          "logprob": -6.147175323968052
+        },
+        {
+          "token": " and",
+          "logprob": -6.3580963354458975
+        },
+        {
+          "token": " to",
+          "logprob": -6.525082713361241
+        },
+        {
+          "token": " for",
+          "logprob": -6.68620744746188
+        },
+        {
+          "token": " of",
+          "logprob": -6.886303473565457
+        },
+        {
+          "token": " that",
+          "logprob": -7.025260049480532
+        }
+      ],
+      "greedy_token": "'s"
+    },
+    {
+      "step_index": 2,
+      "prompt_so_far": "I love pizza 🍕 because it's",
+      "top_logprobs": [
+        {
+          "token": " delicious",
+          "logprob": -0.7979429327503325
+        },
+        {
+          "token": " so",
+          "logprob": -1.3804308548174393
+        },
+        {
+          "token": " tasty",
+          "logprob": -1.9085519296177298
+        },
+        {
+          "token": " versatile",
+          "logprob": -2.449875502016695
+        },
+        {
+          "token": " amazing",
+          "logprob": -2.8567451244953763
+        },
+        {
+          "token": " comforting",
+          "logprob": -3.221238398671331
+        },
+        {
+          "token": " yummy",
+          "logprob": -3.58430348845127
+        },
+        {
+          "token": " perfect",
+          "logprob": -3.9885356126978255
+        },
+        {
+          "token": " incredible",
+          "logprob": -4.329054070267776
+        },
+        {
+          "token": " awesome",
+          "logprob": -4.759130913052262
+        },
+        {
+          "token": " filling",
+          "logprob": -5.044079994707104
+        },
+        {
+          "token": " satisfying",
+          "logprob": -5.301258800526727
+        },
+        {
+          "token": " it",
+          "logprob": -5.580050911713983
+        },
+        {
+          "token": " the",
+          "logprob": -5.90491434536465
+        },
+        {
+          "token": " a",
+          "logprob": -6.147175323968052
+        },
+        {
+          "token": " and",
+          "logprob": -6.3580963354458975
+        },
+        {
+          "token": " to",
+          "logprob": -6.525082713361241
+        },
+        {
+          "token": " is",
+          "logprob": -6.68620744746188
+        },
+        {
+          "token": " for",
+          "logprob": -6.886303473565457
+        },
+        {
+          "token": " of",
+          "logprob": -7.025260049480532
+        }
+      ],
+      "greedy_token": " delicious"
+    },
+    {
+      "step_index": 3,
+      "prompt_so_far": "I love pizza 🍕 because it's delicious",
+      "top_logprobs": [
+        {
+          "token": ",",
+          "logprob": -0.8192919229957835
+        },
+        {
+          "token": " and",
+          "logprob": -1.3804308548174393
+        },
+        {
+          "token": " with",
+          "logprob": -1.9085519296177298
+        },
+        {
+          "token": " in",
+          "logprob": -2.449875502016695
+        },
+        {
+          "token": ".",
+          "logprob": -2.8093679457684346
+        },
+        {
+          "token": " or",
+          "logprob": -3.221238398671331
+        },
+        {
+          "token": "!",
+          "logprob": -3.585525553743267
+        },
+        {
+          "token": " plus",
+          "logprob": -3.9885356126978255
+        },
+        {
+          "token": " yet",
+          "logprob": -4.329054070267776
+        },
+        {
+          "token": " but",
+          "logprob": -4.759130913052262
+        },
+        {
+          "token": "—",
+          "logprob": -5.059057399654454
+        },
+        {
+          "token": "...",
+          "logprob": -5.282431393116522
+        },
+        {
+          "token": " it",
+          "logprob": -5.580050911713983
+        },
+        {
+          "token": " the",
+          "logprob": -5.90491434536465
+        },
+        {
+          "token": " a",
+          "logprob": -6.147175323968052
+        },
+        {
+          "token": " to",
+          "logprob": -6.3580963354458975
+        },
+        {
+          "token": " is",
+          "logprob": -6.525082713361241
+        },
+        {
+          "token": " for",
+          "logprob": -6.68620744746188
+        },
+        {
+          "token": " of",
+          "logprob": -6.886303473565457
+        },
+        {
+          "token": " that",
+          "logprob": -7.025260049480532
+        }
+      ],
+      "greedy_token": ","
+    },
+    {
+      "step_index": 4,
+      "prompt_so_far": "I love pizza 🍕 because it's delicious,",
+      "top_logprobs": [
+        {
+          "token": " easy",
+          "logprob": -0.7979429327503325
+        },
+        {
+          "token": " comforting",
+          "logprob": -1.3804308548174393
+        },
+        {
+          "token": " perfect",
+          "logprob": -1.9085519296177298
+        },
+        {
+          "token": " fun",
+          "logprob": -2.449875502016695
+        },
+        {
+          "token": " cheap",
+          "logprob": -2.8567451244953763
+        },
+        {
+          "token": " simple",
+          "logprob": -3.221238398671331
+        },
+        {
+          "token": " satisfying",
+          "logprob": -3.58430348845127
+        },
+        {
+          "token": " quick",
+          "logprob": -3.9885356126978255
+        },
+        {
+          "token": " warm",
+          "logprob": -4.329054070267776
+        },
+        {
+          "token": " filling",
+          "logprob": -4.759130913052262
+        },
+        {
+          "token": " always",
+          "logprob": -5.044079994707104
+        },
+        {
+          "token": " it",
+          "logprob": -5.301258800526727
+        },
+        {
+          "token": " the",
+          "logprob": -5.580050911713983
+        },
+        {
+          "token": " a",
+          "logprob": -5.90491434536465
+        },
+        {
+          "token": " and",
+          "logprob": -6.147175323968052
+        },
+        {
+          "token": " to",
+          "logprob": -6.3580963354458975
+        },
+        {
+          "token": " is",
+          "logprob": -6.525082713361241
+        },
+        {
+          "token": " for",
+          "logprob": -6.68620744746188
+        },
+        {
+          "token": " of",
+          "logprob": -6.886303473565457
+        },
+        {
+          "token": " that",
+          "logprob": -7.025260049480532
+        }
+      ],
+      "greedy_token": " easy"
+    },
+    {
+      "step_index": 5,
+      "prompt_so_far": "I love pizza 🍕 because it's delicious, easy",
+      "top_logprobs": [
+        {
+          "token": " to",
+          "logprob": -0.7979429327503325
+        },
+        {
+          "token": " yet",
+          "logprob": -1.3804308548174393
+        },
+        {
+          "token": "ly",
+          "logprob": -1.9322600769477125
+        },
+        {
+          "token": " and",
+          "logprob": -2.449875502016695
+        },
+        {
+          "token": " for",
+          "logprob": -2.8567451244953763
+        },
+        {
+          "token": ",",
+          "logprob": -3.2424976555626537
+        },
+        {
+          "token": " when",
+          "logprob": -3.58430348845127
+        },
+        {
+          "token": " enough",
+          "logprob": -3.9885356126978255
+        },
+        {
+          "token": " on",
+          "logprob": -4.329054070267776
+        },
+        {
+          "token": " in",
+          "logprob": -4.759130913052262
+        },
+        {
+          "token": " at",
+          "logprob": -5.044079994707104
+        },
+        {
+          "token": " as",
+          "logprob": -5.301258800526727
+        },
+        {
+          "token": " it",
+          "logprob": -5.580050911713983
+        },
+        {
+          "token": " the",
+          "logprob": -5.90491434536465
+        },
+        {
+          "token": " a",
+          "logprob": -6.147175323968052
+        },
+        {
+          "token": " is",
+          "logprob": -6.3580963354458975
+        },
+        {
+          "token": " of",
+          "logprob": -6.525082713361241
+        },
+        {
+          "token": " that",
+          "logprob": -6.68620744746188
+        },
+        {
+          "token": ".",
+          "logprob": -6.93674327364719
+        },
+        {
+          "token": "'s",
+          "logprob": -7.050016816414918
+        }
+      ],
+      "greedy_token": " to"
+    },
+    {
+      "step_index": 6,
+      "prompt_so_far": "I love pizza 🍕 because it's delicious, easy to",
+      "top_logprobs": [
+        {
+          "token": " share",
+          "logprob": -0.7979429327503325
+        },
+        {
+          "token": " make",
+          "logprob": -1.3804308548174393
+        },
+        {
+          "token": " eat",
+          "logprob": -1.9085519296177298
+        },
+        {
+          "token": " customize",
+          "logprob": -2.449875502016695
+        },
+        {
+          "token": " enjoy",
+          "logprob": -2.8567451244953763
+        },
+        {
+          "token": " love",
+          "logprob": -3.221238398671331
+        },
+        {
+          "token": " serve",
+          "logprob": -3.58430348845127
+        },
+        {
+          "token": " devour",
+          "logprob": -3.9885356126978255
+        },
+        {
+          "token": " bite",
+          "logprob": -4.329054070267776
+        },
+        {
+          "token": " craft",
+          "logprob": -4.759130913052262
+        },
+        {
+          "token": " grab",
+          "logprob": -5.044079994707104
+        },
+        {
+          "token": " it",
+          "logprob": -5.301258800526727
+        },
+        {
+          "token": " the",
+          "logprob": -5.580050911713983
+        },
+        {
+          "token": " a",
+          "logprob": -5.90491434536465
+        },
+        {
+          "token": " and",
+          "logprob": -6.147175323968052
+        },
+        {
+          "token": " to",
+          "logprob": -6.3580963354458975
+        },
+        {
+          "token": " is",
+          "logprob": -6.525082713361241
+        },
+        {
+          "token": " for",
+          "logprob": -6.68620744746188
+        },
+        {
+          "token": " of",
+          "logprob": -6.886303473565457
+        },
+        {
+          "token": " that",
+          "logprob": -7.025260049480532
+        }
+      ],
+      "greedy_token": " share"
+    },
+    {
+      "step_index": 7,
+      "prompt_so_far": "I love pizza 🍕 because it's delicious, easy to share",
+      "top_logprobs": [
+        {
+          "token": ",",
+          "logprob": -0.8192919229957835
+        },
+        {
+          "token": " and",
+          "logprob": -1.3804308548174393
+        },
+        {
+          "token": " with",
+          "logprob": -1.9085519296177298
+        },
+        {
+          "token": ".",
+          "logprob": -2.4504332819216827
+        },
+        {
+          "token": "!",
+          "logprob": -2.8265540851225843
+        },
+        {
+          "token": " plus",
+          "logprob": -3.221238398671331
+        },
+        {
+          "token": " yet",
+          "logprob": -3.58430348845127
+        },
+        {
+          "token": " or",
+          "logprob": -3.9885356126978255
+        },
+        {
+          "token": "—",
+          "logprob": -4.301566474675368
+        },
+        {
+          "token": ";",
+          "logprob": -4.71649944008806
+        },
+        {
+          "token": "...",
+          "logprob": -4.991652783670432
+        },
+        {
+          "token": " it",
+          "logprob": -5.301258800526727
+        },
+        {
+          "token": " the",
+          "logprob": -5.580050911713983
+        },
+        {
+          "token": " a",
+          "logprob": -5.90491434536465
+        },
+        {
+          "token": " to",
+          "logprob": -6.147175323968052
+        },
+        {
+          "token": " is",
+          "logprob": -6.3580963354458975
+        },
+        {
+          "token": " for",
+          "logprob": -6.525082713361241
+        },
+        {
+          "token": " of",
+          "logprob": -6.68620744746188
+        },
+        {
+          "token": " that",
+          "logprob": -6.886303473565457
+        },
+        {
+          "token": " on",
+          "logprob": -7.025260049480532
+        }
+      ],
+      "greedy_token": ","
+    }
+  ]
+}

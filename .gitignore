@@ -1,0 +1,39 @@
+# 依赖
+node_modules/
+.pnp
+.pnp.js
+
+# 构建产物
+.next/
+out/
+build/
+dist/
+
+# 调试
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# 环境变量（含 OpenAI API Key，仅给数据生成脚本用）
+.env
+.env.local
+.env*.local
+
+# macOS
+.DS_Store
+
+# IDE
+.idea/
+.vscode/
+
+# Vercel / Cloudflare 部署元数据
+.vercel
+.wrangler
+
+# TypeScript
+next-env.d.ts
+*.tsbuildinfo
+
+# 临时压缩包（项目早期上传文档用）
+files.zip

@@ -1,0 +1,90 @@
+{
+  "example_id": "weather_today",
+  "prompt": "今天天气真",
+  "prompt_zh_label": "今天天气真 ___",
+  "steps": {
+    "tokenization": {
+      "tokens": [
+        "今天",
+        "天气",
+        "真"
+      ],
+      "token_ids": [
+        21548,
+        22812,
+        1996
+      ]
+    },
+    "embedding": {
+      "dim": 1536,
+      "sample_first_token": [
+        0.543,
+        0.25,
+        -0.16,
+        -0.495,
+        -0.597,
+        -0.418,
+        -0.043,
+        0.353
+      ]
+    },
+    "positional_encoding": {
+      "positions": [
+        0,
+        1,
+        2
+      ]
+    },
+    "transformer": {
+      "layers": 32,
+      "heads": 32,
+      "attention_sample": {
+        "from_token": "真",
+        "weights": [
+          {
+            "to": "今天",
+            "w": 0.22
+          },
+          {
+            "to": "天气",
+            "w": 0.62
+          },
+          {
+            "to": "真",
+            "w": 0.16
+          }
+        ]
+      }
+    },
+    "logits_top": [
+      {
+        "token": "好",
+        "prob": 0.29781990605049163
+      },
+      {
+        "token": "不",
+        "prob": 0.23676455383267433
+      },
+      {
+        "token": "棒",
+        "prob": 0.19157890214822576
+      },
+      {
+        "token": "热",
+        "prob": 0.15056061587571706
+      },
+      {
+        "token": "凉",
+        "prob": 0.12327602209289121
+      }
+    ],
+    "sampling": {
+      "selected_token": "好",
+      "method": "greedy"
+    },
+    "detokenization": {
+      "decoded_text": "好",
+      "will_loop": true
+    }
+  }
+}

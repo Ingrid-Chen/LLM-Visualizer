@@ -1,0 +1,97 @@
+{
+  "example_id": "capital_china",
+  "prompt": "中国的首都是",
+  "prompt_zh_label": "中国的首都是 ___",
+  "steps": {
+    "tokenization": {
+      "tokens": [
+        "中国",
+        "的",
+        "首都",
+        "是"
+      ],
+      "token_ids": [
+        16482,
+        1764,
+        18456,
+        6135
+      ]
+    },
+    "embedding": {
+      "dim": 1536,
+      "sample_first_token": [
+        0.262,
+        0.548,
+        0.577,
+        0.334,
+        -0.066,
+        -0.434,
+        -0.599,
+        -0.482
+      ]
+    },
+    "positional_encoding": {
+      "positions": [
+        0,
+        1,
+        2,
+        3
+      ]
+    },
+    "transformer": {
+      "layers": 32,
+      "heads": 32,
+      "attention_sample": {
+        "from_token": "是",
+        "weights": [
+          {
+            "to": "中国",
+            "w": 0.32
+          },
+          {
+            "to": "的",
+            "w": 0.05
+          },
+          {
+            "to": "首都",
+            "w": 0.51
+          },
+          {
+            "to": "是",
+            "w": 0.12
+          }
+        ]
+      }
+    },
+    "logits_top": [
+      {
+        "token": "北京",
+        "prob": 0.9989952386485722
+      },
+      {
+        "token": "中华",
+        "prob": 0.0005570328611600577
+      },
+      {
+        "token": "首都",
+        "prob": 0.0002687422900681412
+      },
+      {
+        "token": "上海",
+        "prob": 0.00012404306176616204
+      },
+      {
+        "token": "天安",
+        "prob": 0.00005494313843327582
+      }
+    ],
+    "sampling": {
+      "selected_token": "北京",
+      "method": "greedy"
+    },
+    "detokenization": {
+      "decoded_text": "北京",
+      "will_loop": true
+    }
+  }
+}

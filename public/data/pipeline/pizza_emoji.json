@@ -1,0 +1,104 @@
+{
+  "example_id": "pizza_emoji",
+  "prompt": "I love pizza 🍕 because",
+  "prompt_zh_label": "I love pizza 🍕 because ___",
+  "steps": {
+    "tokenization": {
+      "tokens": [
+        "I",
+        " love",
+        " pizza",
+        " 🍕",
+        " because"
+      ],
+      "token_ids": [
+        40,
+        3021,
+        23798,
+        11410,
+        1606
+      ]
+    },
+    "embedding": {
+      "dim": 1536,
+      "sample_first_token": [
+        -0.039,
+        -0.416,
+        -0.597,
+        -0.497,
+        -0.164,
+        0.247,
+        0.541,
+        0.581
+      ]
+    },
+    "positional_encoding": {
+      "positions": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    "transformer": {
+      "layers": 32,
+      "heads": 32,
+      "attention_sample": {
+        "from_token": " because",
+        "weights": [
+          {
+            "to": "I",
+            "w": 0.05
+          },
+          {
+            "to": " love",
+            "w": 0.1
+          },
+          {
+            "to": " pizza",
+            "w": 0.25
+          },
+          {
+            "to": " 🍕",
+            "w": 0.5
+          },
+          {
+            "to": " because",
+            "w": 0.1
+          }
+        ]
+      }
+    },
+    "logits_top": [
+      {
+        "token": " it",
+        "prob": 0.4530727045875292
+      },
+      {
+        "token": " of",
+        "prob": 0.253044328872945
+      },
+      {
+        "token": " pizza",
+        "prob": 0.1492232656367061
+      },
+      {
+        "token": " I",
+        "prob": 0.08684457607679275
+      },
+      {
+        "token": " they",
+        "prob": 0.057815124826027096
+      }
+    ],
+    "sampling": {
+      "selected_token": " it",
+      "method": "greedy"
+    },
+    "detokenization": {
+      "decoded_text": " it",
+      "will_loop": true
+    }
+  }
+}

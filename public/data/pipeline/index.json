@@ -1,0 +1,40 @@
+{
+  "examples": [
+    {
+      "id": "capital_china",
+      "prompt": "中国的首都是",
+      "prompt_zh_label": "中国的首都是 ___",
+      "category": "high_certainty"
+    },
+    {
+      "id": "capital_france_en",
+      "prompt": "The capital of France is",
+      "prompt_zh_label": "The capital of France is ___",
+      "category": "high_certainty"
+    },
+    {
+      "id": "favorite_fruit",
+      "prompt": "我最喜欢的水果是",
+      "prompt_zh_label": "我最喜欢的水果是 ___",
+      "category": "medium_certainty"
+    },
+    {
+      "id": "pizza_emoji",
+      "prompt": "I love pizza 🍕 because",
+      "prompt_zh_label": "I love pizza 🍕 because ___",
+      "category": "medium_certainty"
+    },
+    {
+      "id": "weather_today",
+      "prompt": "今天天气真",
+      "prompt_zh_label": "今天天气真 ___",
+      "category": "low_certainty"
+    },
+    {
+      "id": "she_said",
+      "prompt": "她说：",
+      "prompt_zh_label": "她说：___",
+      "category": "low_certainty"
+    }
+  ]
+}

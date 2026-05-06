@@ -1,0 +1,104 @@
+{
+  "example_id": "capital_france_en",
+  "prompt": "The capital of France is",
+  "prompt_zh_label": "The capital of France is ___",
+  "steps": {
+    "tokenization": {
+      "tokens": [
+        "The",
+        " capital",
+        " of",
+        " France",
+        " is"
+      ],
+      "token_ids": [
+        785,
+        5500,
+        315,
+        9822,
+        374
+      ]
+    },
+    "embedding": {
+      "dim": 1536,
+      "sample_first_token": [
+        -0.598,
+        -0.487,
+        -0.146,
+        0.263,
+        0.549,
+        0.576,
+        0.333,
+        -0.067
+      ]
+    },
+    "positional_encoding": {
+      "positions": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    "transformer": {
+      "layers": 32,
+      "heads": 32,
+      "attention_sample": {
+        "from_token": " is",
+        "weights": [
+          {
+            "to": "The",
+            "w": 0.04
+          },
+          {
+            "to": " capital",
+            "w": 0.28
+          },
+          {
+            "to": " of",
+            "w": 0.04
+          },
+          {
+            "to": " France",
+            "w": 0.55
+          },
+          {
+            "to": " is",
+            "w": 0.09
+          }
+        ]
+      }
+    },
+    "logits_top": [
+      {
+        "token": " Paris",
+        "prob": 0.9989949411963521
+      },
+      {
+        "token": " Lyon",
+        "prob": 0.0005634153338388289
+      },
+      {
+        "token": " Marseille",
+        "prob": 0.00027202555031961265
+      },
+      {
+        "token": " Bordeaux",
+        "prob": 0.00011728096009854764
+      },
+      {
+        "token": " Nice",
+        "prob": 0.000052336959390962265
+      }
+    ],
+    "sampling": {
+      "selected_token": " Paris",
+      "method": "greedy"
+    },
+    "detokenization": {
+      "decoded_text": " Paris",
+      "will_loop": true
+    }
+  }
+}

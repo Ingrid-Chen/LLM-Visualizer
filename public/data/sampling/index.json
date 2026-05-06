@@ -1,0 +1,40 @@
+{
+  "examples": [
+    {
+      "id": "capital_china",
+      "label": "中国的首都是 ___",
+      "category": "high_certainty",
+      "description": "高确定性场景"
+    },
+    {
+      "id": "capital_france_en",
+      "label": "The capital of France is ___",
+      "category": "high_certainty",
+      "description": "高确定性场景"
+    },
+    {
+      "id": "favorite_fruit",
+      "label": "我最喜欢的水果是 ___",
+      "category": "medium_certainty",
+      "description": "中等确定性场景"
+    },
+    {
+      "id": "pizza_emoji",
+      "label": "I love pizza 🍕 because ___",
+      "category": "medium_certainty",
+      "description": "中等确定性场景"
+    },
+    {
+      "id": "weather_today",
+      "label": "今天天气真 ___",
+      "category": "low_certainty",
+      "description": "低确定性场景"
+    },
+    {
+      "id": "she_said",
+      "label": "她说：___",
+      "category": "low_certainty",
+      "description": "低确定性场景"
+    }
+  ]
+}

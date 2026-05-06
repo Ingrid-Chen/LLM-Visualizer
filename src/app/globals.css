@@ -1,0 +1,227 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: theme('fontFamily.sans');
+    background-color: theme('colors.cream.50');
+    color: theme('colors.text.DEFAULT');
+  }
+
+  /* 中文阅读优化 */
+  body {
+    line-height: 1.7;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    /* 整体淡淡的纸张纹理（线性渐变模拟） */
+    background-image:
+      radial-gradient(ellipse at top, rgba(217, 119, 66, 0.04), transparent 60%),
+      radial-gradient(ellipse at bottom right, rgba(44, 81, 66, 0.04), transparent 60%);
+    background-attachment: fixed;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: theme('fontFamily.serif');
+    letter-spacing: -0.01em;
+  }
+}
+
+@layer components {
+  /* 通用容器 */
+  .container-narrow {
+    @apply mx-auto max-w-3xl px-6;
+  }
+  .container-wide {
+    @apply mx-auto max-w-5xl px-6;
+  }
+
+  /* 主舞台：交互区的"杂志级"容器 */
+  .stage {
+    @apply relative rounded-2xl bg-cream-100 border-2 border-ink/15 p-6 sm:p-8;
+    box-shadow:
+      0 4px 0 rgba(44, 81, 66, 0.08),
+      0 12px 28px -12px rgba(44, 81, 66, 0.18);
+  }
+  .stage-label {
+    @apply absolute -top-3.5 left-6 px-3 py-1 bg-ink text-cream-50 text-xs font-medium rounded-full;
+    letter-spacing: 0.08em;
+  }
+
+  /* 强调关键词的手绘下划线（父元素需要 relative inline-block） */
+  .underline-sketch {
+    position: relative;
+    display: inline-block;
+  }
+
+  /* 章节标号：浮动大字号 */
+  .chapter-number {
+    @apply font-serif text-5xl sm:text-6xl text-ink-light/40 leading-none select-none;
+  }
+
+  /* 略微歪斜的卡片边框（手绘感） */
+  .sketch-card {
+    @apply rounded-xl border-2 border-ink/15 bg-cream-50;
+    box-shadow: 2px 3px 0 rgba(44, 81, 66, 0.08);
+  }
+  .sketch-card-active {
+    @apply border-ink shadow-md;
+    box-shadow: 3px 4px 0 rgba(44, 81, 66, 0.18);
+  }
+
+  /* 强调按钮（主 CTA） */
+  .btn-primary {
+    @apply inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-ink text-cream-50 font-medium transition-all;
+    box-shadow: 2px 3px 0 rgba(44, 81, 66, 0.4);
+  }
+  .btn-primary:hover {
+    @apply bg-ink-dark;
+    transform: translate(-1px, -1px);
+    box-shadow: 3px 4px 0 rgba(44, 81, 66, 0.5);
+  }
+  .btn-primary:active {
+    transform: translate(1px, 1px);
+    box-shadow: 1px 1px 0 rgba(44, 81, 66, 0.4);
+  }
+
+  /* 暖橘版按钮（演示模式 / 第二步起的"再生成"） */
+  .btn-ember {
+    @apply inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-ember text-cream-50 font-medium transition-all;
+    box-shadow: 2px 3px 0 rgba(217, 119, 66, 0.4);
+  }
+  .btn-ember:hover {
+    @apply bg-ember-dark;
+    transform: translate(-1px, -1px);
+    box-shadow: 3px 4px 0 rgba(217, 119, 66, 0.5);
+  }
+  .btn-ember:active {
+    transform: translate(1px, 1px);
+    box-shadow: 1px 1px 0 rgba(217, 119, 66, 0.4);
+  }
+
+  /* 次级按钮（重置等） */
+  .btn-secondary {
+    @apply inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border-2 border-ink/20 bg-cream-50 text-text-muted font-medium transition-colors;
+  }
+  .btn-secondary:hover {
+    @apply border-ink/50 text-text;
+  }
+
+  /* 交互区一组小标签（"做这一步" 等） */
+  .step-pill {
+    @apply inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium border;
+  }
+}
+
+/* 展开/淡入动画 —— 配合 PipelineStep 卡片 */
+@keyframes fadeSlide {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 左侧编号圆圈"激活"动画：scale 弹出 + 脉冲光环 */
+@keyframes circlePop {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.18);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+@keyframes pulseRing {
+  0% {
+    box-shadow: 0 0 0 0 rgba(217, 119, 66, 0.6);
+  }
+  70% {
+    box-shadow: 0 0 0 14px rgba(217, 119, 66, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(217, 119, 66, 0);
+  }
+}
+
+/* 左侧竖线上的"流动小球"动画——视觉上把上一步的输出"送"到下一步 */
+@keyframes flowDown {
+  0% {
+    top: -6px;
+    opacity: 0;
+    transform: translateX(-50%) scale(0.6);
+  }
+  15% {
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+  }
+  85% {
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+  }
+  100% {
+    top: calc(100% + 6px);
+    opacity: 0;
+    transform: translateX(-50%) scale(0.6);
+  }
+}
+
+/* Input bar 刚收到上一步数据时的"亮起"动画——脉冲一次，吸引视线 */
+@keyframes inputArrive {
+  0% {
+    background-color: rgba(44, 81, 66, 0.05);
+    border-color: rgba(44, 81, 66, 0.1);
+    box-shadow: 0 0 0 6px rgba(44, 81, 66, 0.18);
+    transform: translateX(-4px);
+  }
+  40% {
+    background-color: rgba(44, 81, 66, 0.22);
+    border-color: rgba(44, 81, 66, 0.6);
+    box-shadow: 0 0 0 0 rgba(44, 81, 66, 0);
+    transform: translateX(0);
+  }
+  100% {
+    background-color: rgba(44, 81, 66, 0.05);
+    border-color: rgba(44, 81, 66, 0.1);
+    box-shadow: 0 0 0 0 rgba(44, 81, 66, 0);
+    transform: translateX(0);
+  }
+}
+
+/* Output bar 准备流向下一步时的脉冲动画——节奏更急，提示"要发出去了" */
+@keyframes outputDeparting {
+  0%,
+  100% {
+    background-color: rgba(217, 119, 66, 0.12);
+    border-color: rgba(217, 119, 66, 0.3);
+    box-shadow: 0 0 0 0 rgba(217, 119, 66, 0.5);
+  }
+  50% {
+    background-color: rgba(217, 119, 66, 0.3);
+    border-color: rgba(217, 119, 66, 0.7);
+    box-shadow: 0 0 0 8px rgba(217, 119, 66, 0.18);
+  }
+}
+
+/* 最终输出区"收到结果"动画——最后一个 step 完成后，最终展示区脉冲提示"成果到了" */
+@keyframes finalArrive {
+  0% {
+    box-shadow: 0 0 0 0 rgba(217, 119, 66, 0.6);
+  }
+  60% {
+    box-shadow: 0 0 0 16px rgba(217, 119, 66, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(217, 119, 66, 0);
+  }
+}

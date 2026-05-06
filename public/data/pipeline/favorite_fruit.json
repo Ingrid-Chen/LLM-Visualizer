@@ -1,0 +1,111 @@
+{
+  "example_id": "favorite_fruit",
+  "prompt": "我最喜欢的水果是",
+  "prompt_zh_label": "我最喜欢的水果是 ___",
+  "steps": {
+    "tokenization": {
+      "tokens": [
+        "我",
+        "最",
+        "喜欢",
+        "的",
+        "水果",
+        "是"
+      ],
+      "token_ids": [
+        3922,
+        5292,
+        23128,
+        1764,
+        30412,
+        6135
+      ]
+    },
+    "embedding": {
+      "dim": 1536,
+      "sample_first_token": [
+        0.269,
+        -0.14,
+        -0.483,
+        -0.599,
+        -0.433,
+        -0.064,
+        0.336,
+        0.577
+      ]
+    },
+    "positional_encoding": {
+      "positions": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    "transformer": {
+      "layers": 32,
+      "heads": 32,
+      "attention_sample": {
+        "from_token": "是",
+        "weights": [
+          {
+            "to": "我",
+            "w": 0.06
+          },
+          {
+            "to": "最",
+            "w": 0.05
+          },
+          {
+            "to": "喜欢",
+            "w": 0.18
+          },
+          {
+            "to": "的",
+            "w": 0.04
+          },
+          {
+            "to": "水果",
+            "w": 0.55
+          },
+          {
+            "to": "是",
+            "w": 0.12
+          }
+        ]
+      }
+    },
+    "logits_top": [
+      {
+        "token": "苹",
+        "prob": 0.4535011135221023
+      },
+      {
+        "token": "西",
+        "prob": 0.2493738014139567
+      },
+      {
+        "token": "草",
+        "prob": 0.1488745164551601
+      },
+      {
+        "token": "葡",
+        "prob": 0.09099209143909882
+      },
+      {
+        "token": "香",
+        "prob": 0.0572584771696821
+      }
+    ],
+    "sampling": {
+      "selected_token": "苹",
+      "method": "greedy"
+    },
+    "detokenization": {
+      "decoded_text": "苹",
+      "will_loop": true
+    }
+  }
+}
