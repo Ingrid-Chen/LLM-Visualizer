@@ -62,31 +62,27 @@ export default function EmbeddingPage() {
         <ChapterNumber n="01" />
         <div>
           <h2 className="font-serif text-xl sm:text-2xl text-ink-dark mb-2">
-            一个 token 长什么样的<span className="relative inline-block text-ember-dark mx-0.5">"向量"<SquiggleUnderline className="text-ember/70" /></span>
+            {t('embedding.ch1.title1')}
+            <span className="relative inline-block text-ember-dark mx-0.5">
+              {t('embedding.ch1.titleHighlight')}
+              <SquiggleUnderline className="text-ember/70" />
+            </span>
+            {' '}{t('embedding.ch1.title2')}
           </h2>
-          <p className="text-sm text-text-muted mb-5 max-w-prose">
-            先讲清楚向量从哪里来（一个查表操作 + 一个可学习的矩阵），再具体看它长什么样。
-          </p>
+          <p className="text-sm text-text-muted mb-5 max-w-prose">{t('embedding.ch1.intro')}</p>
 
-          {/* 1.1 · 矩阵从哪来 */}
-          <h3 className="font-serif text-base font-semibold text-ink-dark mb-2">1.1 · 向量从哪里来？— Embedding 矩阵</h3>
-          <p className="text-sm text-text-muted mb-4 max-w-prose">
-            每个 token 都对应一个固定的向量——这些向量集中存储在一个叫 <strong className="text-text">Embedding 矩阵</strong>的地方。
-            它是一个被模型训练出来的可学习参数表，是 LLM 整个网络最开头的一层。
-          </p>
+          <h3 className="font-serif text-base font-semibold text-ink-dark mb-2">{t('embedding.ch1.section1Title')}</h3>
+          <p className="text-sm text-text-muted mb-4 max-w-prose">{t('embedding.ch1.section1Body')}</p>
           <EmbeddingMatrixIntro />
 
-          {/* 1.2 · 具体看一个向量长什么样 */}
-          <h3 className="font-serif text-base font-semibold text-ink-dark mt-8 mb-2">1.2 · 具体看一个向量长什么样</h3>
-          <p className="text-sm text-text-muted mb-4 max-w-prose">
-            知道了它从哪里来，看个具体的——选个词，把它的向量"切"开几维看一眼。
-          </p>
+          <h3 className="font-serif text-base font-semibold text-ink-dark mt-8 mb-2">{t('embedding.ch1.section2Title')}</h3>
+          <p className="text-sm text-text-muted mb-4 max-w-prose">{t('embedding.ch1.section2Body')}</p>
           <div className="stage">
-            <span className="stage-label">向量切片 · 一个 token 内部 →</span>
+            <span className="stage-label">{t('embedding.ch1.stageLabel')}</span>
             {data ? (
               <VectorSliceViz words={data.words} realDim={data.realDim} />
             ) : (
-              <p className="text-text-muted">加载中…</p>
+              <p className="text-text-muted">{t('common.loading')}</p>
             )}
           </div>
         </div>
@@ -99,15 +95,16 @@ export default function EmbeddingPage() {
         <ChapterNumber n="02" />
         <div>
           <h2 className="font-serif text-xl sm:text-2xl text-ink-dark mb-2">
-            语义相近 = <span className="relative inline-block text-ember-dark">向量距离近<SquiggleUnderline className="text-ember/70" /></span>
+            {t('embedding.ch2.title1')}{' '}
+            <span className="relative inline-block text-ember-dark">
+              {t('embedding.ch2.titleHighlight')}
+              <SquiggleUnderline className="text-ember/70" />
+            </span>
           </h2>
-          <p className="text-sm text-text-muted mb-5 max-w-prose">
-            高维向量不可视化——但我们可以把它降维到 2D 让你"看见"这种聚类感。
-            下面用 OpenAI text-embedding-3-small（1536 维）的语义示例数据：水果聚一起、动物聚一起、城市聚一起、时间词聚一起——这就是"语义"在向量空间里的样子。
-          </p>
+          <p className="text-sm text-text-muted mb-5 max-w-prose">{t('embedding.ch2.body')}</p>
           <div className="stage">
-            <span className="stage-label">点击词看最近邻 →</span>
-            {data ? <SemanticScatter words={data.words} /> : <p className="text-text-muted">加载中…</p>}
+            <span className="stage-label">{t('embedding.ch2.stageLabel')}</span>
+            {data ? <SemanticScatter words={data.words} /> : <p className="text-text-muted">{t('common.loading')}</p>}
           </div>
         </div>
       </section>
@@ -119,15 +116,16 @@ export default function EmbeddingPage() {
         <ChapterNumber n="03" />
         <div>
           <h2 className="font-serif text-xl sm:text-2xl text-ink-dark mb-2">
-            怎么算"距离近"——<span className="relative inline-block text-ember-dark">余弦相似度<SquiggleUnderline className="text-ember/70" /></span>
+            {t('embedding.ch3.title1')}
+            <span className="relative inline-block text-ember-dark">
+              {t('embedding.ch3.titleHighlight')}
+              <SquiggleUnderline className="text-ember/70" />
+            </span>
           </h2>
-          <p className="text-sm text-text-muted mb-5 max-w-prose">
-            两个向量之间的"夹角"决定了它们的相似度——夹角越小，余弦值越接近 1，语义越接近。
-            选两个词看看它们的夹角和相似度数值。
-          </p>
+          <p className="text-sm text-text-muted mb-5 max-w-prose">{t('embedding.ch3.body')}</p>
           <div className="stage">
-            <span className="stage-label">选两个词看夹角 →</span>
-            {data ? <CosineSimilarityViz words={data.words} /> : <p className="text-text-muted">加载中…</p>}
+            <span className="stage-label">{t('embedding.ch3.stageLabel')}</span>
+            {data ? <CosineSimilarityViz words={data.words} /> : <p className="text-text-muted">{t('common.loading')}</p>}
           </div>
         </div>
       </section>
@@ -139,8 +137,8 @@ export default function EmbeddingPage() {
         <div className="mb-6 flex items-center gap-3">
           <ChapterNumber n="04" />
           <div>
-            <p className="text-sm uppercase tracking-widest text-ember-dark">PM 视角</p>
-            <h2 className="font-serif text-xl sm:text-2xl text-ink-dark">从向量到产品决策</h2>
+            <p className="text-sm uppercase tracking-widest text-ember-dark">{t('embedding.ch4.eyebrow')}</p>
+            <h2 className="font-serif text-xl sm:text-2xl text-ink-dark">{t('embedding.ch4.title')}</h2>
           </div>
         </div>
         <PMPerspectiveCards />

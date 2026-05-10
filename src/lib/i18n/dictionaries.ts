@@ -320,6 +320,32 @@ const en = {
       lede:
         "A model can't reason directly with the integer ID of a token. It first looks the token up in an embedding matrix and pulls out a long vector (typically 768 to 12288 numbers). The geometry of these vectors — how close two vectors are — is what lets the model capture meaning. Embedding is the gateway from \"discrete IDs\" to \"continuous space where math works.\"",
     },
+    ch1: {
+      title1: "What does a token's",
+      titleHighlight: '"vector"',
+      title2: 'actually look like?',
+      intro: 'First, where the vector comes from (a lookup plus a trainable matrix), then what it actually looks like.',
+      section1Title: '1.1 · Where the vector comes from — the Embedding matrix',
+      section1Body:
+        "Every token maps to a fixed vector. These vectors all live in one place: the Embedding matrix — a trainable parameter table at the very first layer of an LLM.",
+      section2Title: '1.2 · What a vector actually looks like',
+      section2Body: "Now that we know where it comes from, let's look at one — pick a word and slice through a few dimensions of its vector.",
+      stageLabel: 'VECTOR SLICE · INSIDE ONE TOKEN →',
+    },
+    ch2: {
+      title1: 'Semantic similarity =',
+      titleHighlight: 'short vector distance',
+      body:
+        "High-dimensional vectors can't be visualized — but we can project them to 2D so you can see the clustering. The example below uses OpenAI text-embedding-3-small (1536-dim) on semantic test data: fruits cluster together, animals together, cities together, time words together — that's what \"semantics\" looks like as geometry.",
+      stageLabel: 'CLICK A WORD TO SEE ITS NEAREST NEIGHBORS →',
+    },
+    ch3: {
+      title1: 'How "close" is computed —',
+      titleHighlight: 'cosine similarity',
+      body: 'The angle between two vectors determines their similarity — a smaller angle means the cosine is closer to 1, meaning closer in meaning. Pick two words to see their angle and similarity score.',
+      stageLabel: 'PICK TWO WORDS TO SEE THE ANGLE →',
+    },
+    ch4: { eyebrow: 'PRODUCT PERSPECTIVE', title: 'From vectors to product decisions' },
     outro: {
       body:
         "Embeddings give every token a position in semantic space — but at this point the model still has no idea about word order. The next step (Positional Encoding) injects position information into these vectors.",
@@ -683,6 +709,32 @@ const zh = {
       lede:
         '切完 token，模型还看不懂。它要先把每个 token 映射成一个高维向量（说人话：一组浮点数，比如 4096 个数字串成一行）——这就是模型"理解"这个 token 的内部表示。语义相近的词，向量在这个高维空间里方向也相近——这就是 RAG / 语义搜索的全部魔法。',
     },
+    ch1: {
+      title1: '一个 token 长什么样的',
+      titleHighlight: '"向量"',
+      title2: '',
+      intro: '先讲清楚向量从哪里来（一个查表操作 + 一个可学习的矩阵），再具体看它长什么样。',
+      section1Title: '1.1 · 向量从哪里来？— Embedding 矩阵',
+      section1Body:
+        '每个 token 都对应一个固定的向量——这些向量集中存储在一个叫 Embedding 矩阵的地方。它是一个被模型训练出来的可学习参数表，是 LLM 整个网络最开头的一层。',
+      section2Title: '1.2 · 具体看一个向量长什么样',
+      section2Body: '知道了它从哪里来，看个具体的——选个词，把它的向量"切"开几维看一眼。',
+      stageLabel: '向量切片 · 一个 token 内部 →',
+    },
+    ch2: {
+      title1: '语义相近 =',
+      titleHighlight: '向量距离近',
+      body:
+        '高维向量不可视化——但我们可以把它降维到 2D 让你"看见"这种聚类感。下面用 OpenAI text-embedding-3-small（1536 维）的语义示例数据：水果聚一起、动物聚一起、城市聚一起、时间词聚一起——这就是"语义"在向量空间里的样子。',
+      stageLabel: '点击词看最近邻 →',
+    },
+    ch3: {
+      title1: '怎么算"距离近"——',
+      titleHighlight: '余弦相似度',
+      body: '两个向量之间的"夹角"决定了它们的相似度——夹角越小，余弦值越接近 1，语义越接近。选两个词看看它们的夹角和相似度数值。',
+      stageLabel: '选两个词看夹角 →',
+    },
+    ch4: { eyebrow: 'PM 视角', title: '从向量到产品决策' },
     outro: {
       body: '每个 token 现在都是一个高维向量了。但 Transformer 处理输入时是"并行看所有 token"——它本身不知道谁前谁后。下一步要给每个位置加一个独特的"指纹"，让模型分得清"我打你"和"你打我"。',
       backHome: '← 回到首页',
