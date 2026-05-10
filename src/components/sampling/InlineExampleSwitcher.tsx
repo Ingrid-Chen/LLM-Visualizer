@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 
+import { useT } from '@/lib/i18n/LangContext';
 import type { Certainty, IndexEntry } from '@/lib/types';
 
 interface Props {
@@ -16,14 +17,14 @@ const CATEGORY_BADGE: Record<Certainty, string> = {
   low_certainty: 'bg-amber-100 text-amber-800',
 };
 
-const CATEGORY_TEXT: Record<Certainty, string> = {
-  high_certainty: '高',
-  medium_certainty: '中',
-  low_certainty: '低',
-};
-
 // stage 顶部的"换其他文本"快捷入口 —— 不脱离 stage 也能切例子
 export default function InlineExampleSwitcher({ examples, selectedId, onSelect }: Props) {
+  const t = useT();
+  const CATEGORY_TEXT: Record<Certainty, string> = {
+    high_certainty: t('home.inlineSwitcher.certaintyHigh'),
+    medium_certainty: t('home.inlineSwitcher.certaintyMedium'),
+    low_certainty: t('home.inlineSwitcher.certaintyLow'),
+  };
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -48,9 +49,9 @@ export default function InlineExampleSwitcher({ examples, selectedId, onSelect }
           'border border-ink/20 bg-cream-50 text-text hover:border-ink/50 transition-colors',
         ].join(' ')}
         aria-expanded={open}
-        aria-label="切换其他预设例子"
+        aria-label={t('home.inlineSwitcher.ariaLabel')}
       >
-        <span>↻ 换其他文本</span>
+        <span>{t('home.inlineSwitcher.buttonLabel')}</span>
         <span className={['transition-transform', open ? 'rotate-180' : ''].join(' ')}>▾</span>
       </button>
 
@@ -64,7 +65,7 @@ export default function InlineExampleSwitcher({ examples, selectedId, onSelect }
           ].join(' ')}
         >
           <div className="text-[10px] uppercase tracking-wider text-text-muted px-2 py-1.5">
-            预设例子（v0.1 暂不支持自由输入）
+            {t('home.inlineSwitcher.heading')}
           </div>
           <ul className="space-y-1">
             {examples.map((ex) => {

@@ -64,6 +64,60 @@ const en = {
     },
     footnote:
       '※ v0.1 demo data. The Sampling step uses real model output; the other six steps use placeholder data to illustrate the flow. Detailed module pages are shipping incrementally.',
+    stepViz: {
+      tokenization: {
+        header: 'Split result ({n} tokens)',
+        caption: '※ Each token maps to a fixed ID in the vocabulary. The same character at different positions may split into different tokens.',
+        mythToggleShow: '⚡ A commonly overlooked fact — show',
+        mythToggleHide: '⚡ A commonly overlooked fact — hide',
+        myth1Title: '"Chinese tokens cost 2-3× more than English" is outdated',
+        myth1Body:
+          'That was a GPT-2 / GPT-3 era fact — back then tokenizer training data had little Chinese, and each character got byte-level split into 2-3 tokens. GPT-4 (cl100k_base) and GPT-4o (o200k_base) added massive Chinese corpora, and BPE merged common phrases like "中国" / "首都" into a single token. Equivalent Chinese and English now use comparable token counts, usually within ±20%.',
+        myth1Example: '"中" in UTF-8 = 3 bytes → cl100k_base split = 1 token',
+        myth2Title: '⚠️ Emojis are the real token hogs',
+        myth2Body:
+          "An emoji takes 4 bytes in UTF-8 and shows up far less often than common Chinese characters in tokenizer training data, so BPE doesn't merge it — it's typically split into 2-3 tokens, several times more expensive than a single Chinese character. When designing prompts: emojis used decoratively in chat UIs look free but are token hogs at billing time.",
+        myth2Example: '"🍕" in UTF-8 = 4 bytes → cl100k_base split = 2-3 tokens',
+        mythCaveat: '※ Verify any text yourself at tiktokenizer.vercel.app.',
+      },
+      embedding: {
+        header: 'Vector for token "{token}" (first 8 dims shown, actually {dim}-dim)',
+        caption: '※ Real vectors are {dim}-dim (only 8 shown here). Semantically similar words sit close in this high-dimensional space.',
+        dimTooltip: 'Dim {n}: {value}',
+      },
+      positional: {
+        header: 'Each token gets a position number (pos) added to its vector',
+        caption: '※ Transformers don\'t see word order natively. Positional encoding is the unique "fingerprint" added per position so the model can tell "I hit you" from "you hit me."',
+      },
+      transformer: {
+        layersLabel: 'Layers:',
+        headsLabel: 'Heads:',
+        header: 'Attention weights for token "{token}" (which earlier tokens it looks at)',
+        caption: '※ Simplified — averaged over N layers × N heads. Real models have independent attention distributions per layer per head, attending to context from different angles in parallel.',
+      },
+      logits: {
+        header: "Top-5 candidate tokens by probability",
+        caption: '※ Real vocabularies have tens of thousands to over 100,000 tokens; only the top 5 by probability are shown.',
+      },
+      sampling: {
+        header: 'Sampled token',
+        strategyLabel: 'strategy',
+        caption: '※ Sampling strategy (temperature / top-k / top-p) decides how to pick from the distribution. Greedy here always takes the highest-probability token.',
+      },
+      detokenization: {
+        header: 'token id → text → appended to input',
+        loopHint: '→ run the 7 steps again to predict the next…',
+        caption: '※ A model generates one token at a time. To write a paragraph, it appends each generated token to the input and runs all 7 steps again — until an end token or max_tokens is reached.',
+      },
+    },
+    inlineSwitcher: {
+      buttonLabel: '↻ Switch example',
+      ariaLabel: 'switch to another preset example',
+      heading: 'Preset examples (free input not supported in v0.1)',
+      certaintyHigh: 'H',
+      certaintyMedium: 'M',
+      certaintyLow: 'L',
+    },
     steps: {
       tokenization: {
         title: 'Tokenization · text → tokens',
@@ -393,6 +447,60 @@ const zh = {
     },
     footnote:
       '※ v0.1 mock 数据。Sampling 步骤是已落地的真实模型数据；其他 6 步用占位数据示意流程，详细模块逐步上线。',
+    stepViz: {
+      tokenization: {
+        header: '切分结果（{n} 个 token）',
+        caption: '※ 每个 token 都对应词表里的一个固定编号（id）。同一个汉字在不同位置可能切成不同 token。',
+        mythToggleShow: '⚡ 一个常被忽略的事实 展开',
+        mythToggleHide: '⚡ 一个常被忽略的事实 收起',
+        myth1Title: '"中文 token 比英文贵 2-3 倍" 是过时的认知',
+        myth1Body:
+          '这是 GPT-2/GPT-3 时代的事实——那会儿 tokenizer 训练数据中文少，每个汉字会被 byte-level 拆成 2-3 个 token。GPT-4（cl100k_base）和 GPT-4o（o200k_base）训练数据里加了大量中文，BPE 把"中国""首都"这种常见词组合并成 1 个 token。现在同义中英文 token 数已经基本持平，差异通常 ±20% 以内。',
+        myth1Example: '"中" 字 UTF-8 = 3 字节 → cl100k_base 切分 = 1 token',
+        myth2Title: '⚠️ Emoji 才是真正的 token 大户',
+        myth2Body:
+          '一个 emoji 在 UTF-8 里占 4 字节，且 tokenizer 训练数据里出现频率远低于常见汉字，BPE 没合并——通常被拆成 2-3 个 token，比一个汉字贵几倍。在做 prompt 时要留意：chat UI 里的 emoji 装饰看起来"免费"，实际计费时是 token 大户。',
+        myth2Example: '"🍕" UTF-8 = 4 字节 → cl100k_base 切分 = 2-3 token',
+        mythCaveat: '※ 实测可去 tiktokenizer.vercel.app 输入任意文本看真实切分。',
+      },
+      embedding: {
+        header: 'token "{token}" 的向量（前 8 维示意，实际 {dim} 维）',
+        caption: '※ 真实向量 {dim} 维（这里只能示意 8 维）。语义相近的词在这个高维空间里距离近。',
+        dimTooltip: '第 {n} 维：{value}',
+      },
+      positional: {
+        header: '每个 token 的位置编号（pos）会被加到向量上',
+        caption: '※ Transformer 本身不区分词序——位置编码就是给每个位置加一个独特"指纹"，让模型分得清"我打你"和"你打我"。',
+      },
+      transformer: {
+        layersLabel: '层数：',
+        headsLabel: '注意力头：',
+        header: 'token "{token}" 的注意力权重（看向哪些上文）',
+        caption: '※ 这是 N 层 × N 头平均后的简化版。真实模型每一层每个头都有独立的注意力分布，能从不同角度同时关注上下文。',
+      },
+      logits: {
+        header: '模型输出的 top 5 候选词概率',
+        caption: '※ 完整词表有数万到十几万个 token，这里只显示概率最高的 5 个。',
+      },
+      sampling: {
+        header: '采样结果',
+        strategyLabel: '策略',
+        caption: '※ 采样策略（temperature / top-k / top-p）决定从概率分布里怎么挑——这里用 greedy 永远选概率最高的那个。',
+      },
+      detokenization: {
+        header: 'token id → 文字 → 接回输入',
+        loopHint: '→ 再来一遍预测下一个…',
+        caption: '※ 模型一次只生成一个 token；要写一段话，就把生成的 token 接回输入末尾、再走一遍这 7 步——直到遇到结束 token 或达到 max_tokens。',
+      },
+    },
+    inlineSwitcher: {
+      buttonLabel: '↻ 换其他文本',
+      ariaLabel: '切换其他预设例子',
+      heading: '预设例子（v0.1 暂不支持自由输入）',
+      certaintyHigh: '高',
+      certaintyMedium: '中',
+      certaintyLow: '低',
+    },
     steps: {
       tokenization: {
         title: 'Tokenization · 文字 → token',
