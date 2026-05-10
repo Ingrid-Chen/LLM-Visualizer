@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import { useLang, useT, localizedHref } from '@/lib/i18n/LangContext';
 
 interface Props {
   index: string; // "01" / "02" 等
@@ -48,6 +49,8 @@ export default function PipelineStep({
   children,
 }: Props) {
   const cardRef = useRef<HTMLDivElement>(null);
+  const t = useT();
+  const lang = useLang();
 
   // 当步骤变为 active 时滚到屏幕中上（block:'start' 配合 scroll-mt 让标题贴近视口顶部）
   useEffect(() => {
@@ -114,7 +117,7 @@ export default function PipelineStep({
             >
               {title}
             </h3>
-            <span className="text-text-muted text-xs">{expanded ? '▾ 收起' : '▸ 展开'}</span>
+            <span className="text-text-muted text-xs">{expanded ? t('common.collapse') : t('common.expand')}</span>
           </div>
           <p className="text-sm text-text-muted mt-0.5">{oneLiner}</p>
         </button>
@@ -133,7 +136,7 @@ export default function PipelineStep({
                 className="mb-3 flex items-center gap-2 px-3 py-1.5 rounded-md bg-ink/5 border border-ink/10 text-xs transition-colors"
                 style={isActive ? { animation: 'inputArrive 1.4s ease-out 1 forwards' } : undefined}
               >
-                <span className="text-text-muted/80 shrink-0 uppercase tracking-wider">⬇ 输入</span>
+                <span className="text-text-muted/80 shrink-0 uppercase tracking-wider">{t('common.inputLabel')}</span>
                 <span className="text-text flex-1 min-w-0 truncate">{inputLabel}</span>
               </div>
             )}
@@ -147,7 +150,7 @@ export default function PipelineStep({
                 className="mt-3 flex items-center gap-2 px-3 py-1.5 rounded-md bg-ember/10 border border-ember/25 text-xs transition-colors"
                 style={isFlowingNext ? { animation: 'outputDeparting 0.8s ease-in-out infinite' } : undefined}
               >
-                <span className="text-ember-dark shrink-0 uppercase tracking-wider font-medium">⬇ 输出</span>
+                <span className="text-ember-dark shrink-0 uppercase tracking-wider font-medium">{t('common.outputLabel')}</span>
                 <span className="text-text flex-1 min-w-0 truncate">{outputLabel}</span>
               </div>
             )}
@@ -155,12 +158,12 @@ export default function PipelineStep({
             {/* 深入了解按钮 — 右下角，明显的 CTA */}
             <div className="pt-3 mt-3 border-t border-ink/10 flex justify-end">
               {status === 'live' ? (
-                <a href={href!} className="btn-primary text-sm">
-                  深入了解 {title.split('·')[0].trim()} →
+                <a href={localizedHref(lang, href!)} className="btn-primary text-sm">
+                  {t('common.deepDiveButton', { name: title.split('·')[0].trim() })}
                 </a>
               ) : (
                 <button type="button" onClick={onWipClick} className="btn-secondary text-sm">
-                  深入了解 →
+                  {t('common.deepDiveButtonGeneric')}
                 </button>
               )}
             </div>
