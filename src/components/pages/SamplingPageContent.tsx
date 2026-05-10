@@ -36,7 +36,10 @@ export default function SamplingPageContent() {
       .then((data) => {
         setIndex(data);
         if (data.examples.length > 0 && !selectedId) {
-          setSelectedId(data.examples[0].id);
+          // 按当前 locale 选默认例子：英文版 → 英文 prompt；中文版 → 中文 prompt
+          const preferredId = lang === 'en' ? 'capital_france_en' : 'capital_china';
+          const fallback = data.examples.find((e) => e.id === preferredId)?.id ?? data.examples[0].id;
+          setSelectedId(fallback);
         }
       })
       .catch((err) => console.error('failed to load index.json:', err));

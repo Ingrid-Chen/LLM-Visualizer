@@ -9,10 +9,14 @@ import EmbeddingMatrixIntro from '@/components/embedding/EmbeddingMatrixIntro';
 import PMPerspectiveCards from '@/components/embedding/PMPerspectiveCards';
 import SemanticScatter from '@/components/embedding/SemanticScatter';
 import VectorSliceViz from '@/components/embedding/VectorSliceViz';
+import LanguageSwitcher from '@/components/ui/LanguageSwitcher';
 import { ChapterNumber, SquiggleUnderline, WavyDivider } from '@/components/ui/SketchDecor';
+import { useLang, useT, localizedHref } from '@/lib/i18n/LangContext';
 import type { EmbeddingData } from '@/lib/types';
 
 export default function EmbeddingPage() {
+  const t = useT();
+  const lang = useLang();
   const [data, setData] = useState<EmbeddingData | null>(null);
 
   useEffect(() => {
@@ -25,32 +29,30 @@ export default function EmbeddingPage() {
   return (
     <main className="container-wide py-8 sm:py-12 pb-20">
       {/* 顶部导航 */}
-      <nav className="mb-8 flex items-center justify-between text-sm">
-        <Link href="/" className="text-text-muted hover:text-ink-dark transition-colors">
-          ← LLM Visualizer 首页
+      <nav className="mb-8 flex items-center justify-between text-sm gap-3">
+        <Link href={localizedHref(lang, '/')} className="text-text-muted hover:text-ink-dark transition-colors">
+          {t('embedding.nav.backToHome')}
         </Link>
-        <span className="text-text-muted font-mono">02 / 08</span>
+        <div className="flex items-center gap-3">
+          <LanguageSwitcher />
+          <span className="text-text-muted font-mono">{t('embedding.nav.pageIndex')}</span>
+        </div>
       </nav>
 
       {/* === Hero === */}
       <header className="mb-10">
         <div className="flex items-center gap-3 mb-3">
-          <span className="font-mono text-xs uppercase tracking-[0.25em] text-ember-dark">嵌入 · Embedding</span>
+          <span className="font-mono text-xs uppercase tracking-[0.25em] text-ember-dark">{t('embedding.eyebrow')}</span>
           <span className="flex-1 h-px bg-ember/30" />
         </div>
         <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl text-ink-dark leading-[1.15] mb-4">
-          每个 token 都被变成
+          {t('embedding.hero.title1')}
           <span className="relative inline-block text-ember-dark mx-1">
-            一组数字
+            {t('embedding.hero.titleHighlight')}
             <SquiggleUnderline className="text-ember" />
           </span>
         </h1>
-        <p className="text-base text-text-muted max-w-prose leading-relaxed">
-          切完 token，模型还看不懂。它要先把每个 token 映射成一个<strong className="text-text">高维向量</strong>
-          （说人话：<strong className="text-text">一组浮点数</strong>，比如 4096 个数字串成一行）——
-          这就是模型"理解"这个 token 的<strong className="text-text">内部表示</strong>。
-          语义相近的词，向量在这个高维空间里方向也相近——这就是 RAG / 语义搜索的全部魔法。
-        </p>
+        <p className="text-base text-text-muted max-w-prose leading-relaxed">{t('embedding.hero.lede')}</p>
       </header>
 
       <WavyDivider className="text-ink/20 mb-10" />
@@ -150,16 +152,13 @@ export default function EmbeddingPage() {
 
       {/* 章节出口 */}
       <section className="mt-12 pt-8 border-t-2 border-dashed border-ink/15">
-        <p className="text-text-muted leading-relaxed mb-5 max-w-prose">
-          每个 token 现在都是一个高维向量了。但 Transformer 处理输入时是"并行看所有 token"——它本身不知道谁前谁后。
-          下一步要给每个位置加一个独特的"指纹"，让模型分得清"我打你"和"你打我"。
-        </p>
+        <p className="text-text-muted leading-relaxed mb-5 max-w-prose">{t('embedding.outro.body')}</p>
         <div className="flex flex-wrap gap-3 text-sm">
-          <Link href="/" className="btn-secondary">
-            ← 回到首页
+          <Link href={localizedHref(lang, '/')} className="btn-secondary">
+            {t('embedding.outro.backHome')}
           </Link>
-          <Link href="/positional" className="btn-primary">
-            下一章 · Positional Encoding →
+          <Link href={localizedHref(lang, '/positional')} className="btn-primary">
+            {t('embedding.outro.next')}
           </Link>
         </div>
       </section>

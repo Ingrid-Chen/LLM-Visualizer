@@ -1,3 +1,5 @@
+'use client';
+
 import Link from 'next/link';
 
 import DeepDiveLogits from '@/components/logits/DeepDiveLogits';
@@ -6,38 +8,41 @@ import LogitsToProb from '@/components/logits/LogitsToProb';
 import PMPerspectiveCards from '@/components/logits/PMPerspectiveCards';
 import SoftmaxDemo from '@/components/logits/SoftmaxDemo';
 import UnembeddingDiagram from '@/components/logits/UnembeddingDiagram';
+import LanguageSwitcher from '@/components/ui/LanguageSwitcher';
 import { ChapterNumber, SquiggleUnderline, WavyDivider } from '@/components/ui/SketchDecor';
+import { useLang, useT, localizedHref } from '@/lib/i18n/LangContext';
 
 export default function LogitsPage() {
+  const t = useT();
+  const lang = useLang();
   return (
     <main className="container-wide py-8 sm:py-12 pb-20">
       {/* 顶部导航 */}
-      <nav className="mb-8 flex items-center justify-between text-sm">
-        <Link href="/" className="text-text-muted hover:text-ink-dark transition-colors">
-          ← LLM Visualizer 首页
+      <nav className="mb-8 flex items-center justify-between text-sm gap-3">
+        <Link href={localizedHref(lang, '/')} className="text-text-muted hover:text-ink-dark transition-colors">
+          {t('logits.nav.backToHome')}
         </Link>
-        <span className="text-text-muted font-mono">05 / 08</span>
+        <div className="flex items-center gap-3">
+          <LanguageSwitcher />
+          <span className="text-text-muted font-mono">{t('logits.nav.pageIndex')}</span>
+        </div>
       </nav>
 
       {/* === Hero === */}
       <header className="mb-10">
         <div className="flex items-center gap-3 mb-3">
-          <span className="font-mono text-xs uppercase tracking-[0.25em] text-ember-dark">输出层 · Logits</span>
+          <span className="font-mono text-xs uppercase tracking-[0.25em] text-ember-dark">{t('logits.eyebrow')}</span>
           <span className="flex-1 h-px bg-ember/30" />
         </div>
         <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl text-ink-dark leading-[1.15] mb-4">
-          从最后一层向量到
+          {t('logits.hero.title1')}
           <span className="relative inline-block text-ember-dark mx-1">
-            词表概率分布
+            {t('logits.hero.titleHighlight')}
             <SquiggleUnderline className="text-ember" />
           </span>
+          {t('logits.hero.title2')}
         </h1>
-        <p className="text-base text-text-muted max-w-prose leading-relaxed">
-          走完 N 层 Transformer 后，每个位置都是一个 d 维向量。
-          这一步的任务：把<strong className="text-text">最后一个位置的向量</strong>映射成
-          <strong className="text-text">"下一个 token 是哪个词的概率"</strong>。
-          数学上就两件事：① 乘以 unembedding 矩阵 → logits；② 过 softmax → 概率。
-        </p>
+        <p className="text-base text-text-muted max-w-prose leading-relaxed">{t('logits.hero.lede')}</p>
       </header>
 
       <WavyDivider className="text-ink/20 mb-10" />
@@ -131,16 +136,13 @@ export default function LogitsPage() {
 
       {/* 章节出口 */}
       <section className="mt-12 pt-8 border-t-2 border-dashed border-ink/15">
-        <p className="text-text-muted leading-relaxed mb-5 max-w-prose">
-          有了概率分布——下一步就是从中"挑一个"。直接选概率最高的（贪婪），还是按概率随机抽（多样化）？
-          这就是 Sampling 模块要解决的问题。
-        </p>
+        <p className="text-text-muted leading-relaxed mb-5 max-w-prose">{t('logits.outro.body')}</p>
         <div className="flex flex-wrap gap-3 text-sm">
-          <Link href="/" className="btn-secondary">
-            ← 回到首页
+          <Link href={localizedHref(lang, '/')} className="btn-secondary">
+            {t('logits.outro.backHome')}
           </Link>
-          <Link href="/sampling" className="btn-primary">
-            下一章 · Sampling →
+          <Link href={localizedHref(lang, '/sampling')} className="btn-primary">
+            {t('logits.outro.next')}
           </Link>
         </div>
       </section>

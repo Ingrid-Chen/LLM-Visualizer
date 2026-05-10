@@ -1,3 +1,5 @@
+'use client';
+
 import Link from 'next/link';
 
 import AutoregressiveLoop from '@/components/loop/AutoregressiveLoop';
@@ -5,40 +7,41 @@ import DeepDiveLoop from '@/components/loop/DeepDiveLoop';
 import MaxTokensSlider from '@/components/loop/MaxTokensSlider';
 import PMPerspectiveCards from '@/components/loop/PMPerspectiveCards';
 import StreamingComparison from '@/components/loop/StreamingComparison';
+import LanguageSwitcher from '@/components/ui/LanguageSwitcher';
 import { ChapterNumber, SquiggleUnderline, WavyDivider } from '@/components/ui/SketchDecor';
+import { useLang, useT, localizedHref } from '@/lib/i18n/LangContext';
 
 export default function LoopPage() {
+  const t = useT();
+  const lang = useLang();
   return (
     <main className="container-wide py-8 sm:py-12 pb-20">
       {/* 顶部导航 */}
-      <nav className="mb-8 flex items-center justify-between text-sm">
-        <Link href="/" className="text-text-muted hover:text-ink-dark transition-colors">
-          ← LLM Visualizer 首页
+      <nav className="mb-8 flex items-center justify-between text-sm gap-3">
+        <Link href={localizedHref(lang, '/')} className="text-text-muted hover:text-ink-dark transition-colors">
+          {t('loop.nav.backToHome')}
         </Link>
-        <span className="text-text-muted font-mono">07 / 08</span>
+        <div className="flex items-center gap-3">
+          <LanguageSwitcher />
+          <span className="text-text-muted font-mono">{t('loop.nav.pageIndex')}</span>
+        </div>
       </nav>
 
       {/* === Hero === */}
       <header className="mb-10">
         <div className="flex items-center gap-3 mb-3">
-          <span className="font-mono text-xs uppercase tracking-[0.25em] text-ember-dark">解码循环 · Detokenization &amp; Loop</span>
+          <span className="font-mono text-xs uppercase tracking-[0.25em] text-ember-dark">{t('loop.eyebrow')}</span>
           <span className="flex-1 h-px bg-ember/30" />
         </div>
         <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl text-ink-dark leading-[1.15] mb-4">
-          模型一次只生成一个 token——
-          <br className="hidden sm:block" />
-          靠
+          {t('loop.hero.title1')}{' '}
           <span className="relative inline-block text-ember-dark mx-1">
-            循环
+            {t('loop.hero.titleHighlight')}
             <SquiggleUnderline className="text-ember" />
           </span>
-          写出一段话
+          {' '}{t('loop.hero.title2')}
         </h1>
-        <p className="text-base text-text-muted max-w-prose leading-relaxed">
-          前 6 个模块讲了模型<strong className="text-text">前向计算的前 6 步</strong>（Tokenization → Embedding → Positional → Transformer → Logits → Sampling），
-          只能预测下一个 token。但 LLM 输出一段话靠的是<strong className="text-text">把这个 token 接回输入末尾再走一遍</strong>——
-          这一节讲第 7 步 detokenization + 整体循环，以及它衍生的 PM 关切点：streaming 和 max_tokens。
-        </p>
+        <p className="text-base text-text-muted max-w-prose leading-relaxed">{t('loop.hero.lede')}</p>
       </header>
 
       <WavyDivider className="text-ink/20 mb-10" />
@@ -121,16 +124,13 @@ export default function LoopPage() {
 
       {/* 章节出口 */}
       <section className="mt-12 pt-8 border-t-2 border-dashed border-ink/15">
-        <p className="text-text-muted leading-relaxed mb-5 max-w-prose">
-          走到这里，你已经理解了 LLM 从输入到输出的完整流水线 + 循环机制。
-          最后一个模块是 <strong className="text-text">Prompt 结构</strong>——讲 system / user / assistant 三个角色，以及 prompt 注入安全。
-        </p>
+        <p className="text-text-muted leading-relaxed mb-5 max-w-prose">{t('loop.outro.body')}</p>
         <div className="flex flex-wrap gap-3 text-sm">
-          <Link href="/" className="btn-secondary">
-            ← 回到首页
+          <Link href={localizedHref(lang, '/')} className="btn-secondary">
+            {t('loop.outro.backHome')}
           </Link>
           <span className="step-pill bg-cream-100 text-text-muted/60 border-ink/10">
-            下一章 · Prompt 结构（待开发）
+            {t('loop.outro.next')}
           </span>
         </div>
       </section>

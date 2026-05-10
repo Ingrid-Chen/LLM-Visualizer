@@ -208,6 +208,142 @@ const en = {
       next: 'Next · Detokenization →',
     },
   },
+  // ============== TOKENIZATION ==============
+  tokenization: {
+    nav: { pageIndex: '01 / 08', backToHome: '← LLM Visualizer home' },
+    eyebrow: 'CHAPTER 01 · TOKENIZATION',
+    hero: {
+      title1: "A model doesn't read your text by character — it reads",
+      titleHighlight: 'by token',
+      lede:
+        "A token is the model's basic unit of recognition — it might be a complete word, a word fragment, half of a Chinese character, or a raw byte. The character count you see and the token count the model sees often diverge — and that gap directly drives API cost, real context-window capacity, and a long list of product bugs. The next five sections walk you through tokens end-to-end.",
+    },
+    ch1: {
+      title1: 'First principles: ',
+      titleHighlight: 'bytes, characters, and tokens',
+      title2: 'are three different things',
+      body:
+        "Bytes, characters, and tokens sit at three different layers, and they're often conflated. The interactive demo below clarifies the relationships in one go — once you have it, statements like \"each Chinese character ≈ 3 tokens in GPT-2\" become obvious.",
+      stageLabel: 'CHARACTER → BYTE → TOKEN, ALL THREE →',
+    },
+    ch2: {
+      title: 'Try it: see how a model splits your sentence',
+      body: 'The playground below uses real OpenAI tokenizers, running entirely in your browser (no API). Type any text — Chinese, English, emoji, code — and see the split instantly.',
+      stageLabel: 'LIVE TOKENIZATION · YOUR TURN →',
+    },
+    ch3: {
+      title1: '"Chinese tokens cost 2–3× more than English" — ',
+      titleHighlight: "that's outdated",
+      body:
+        "From GPT-2 (r50k_base) to GPT-4o (o200k_base), the token count for the same Chinese text has often dropped by 50%+. Not because the model got smarter — because BPE training data absorbed massive amounts of Chinese, and common phrases collapsed into single tokens. If a learning resource says \"each Chinese character is 2–3 tokens,\" that's GPT-2-era fact.",
+      stageLabel: 'THREE ERAS COMPARED →',
+    },
+    ch4: {
+      title1: 'Turning token count into ',
+      titleHighlight: 'dollars',
+      body:
+        'When sizing a product, the math is "tokens per call × call count × unit price." Common mistake: dismissing per-call cost as "cents," then blowing past budget the moment you scale.',
+      stageLabel: 'COST AT SCALE →',
+    },
+    ch5: {
+      eyebrow: 'PRODUCT PERSPECTIVE',
+      title: 'From tokens to product decisions',
+    },
+    outro: {
+      body:
+        "Once tokenized, the model maps each token to a high-dimensional vector (an embedding) so that semantically similar words sit close to each other in that space. That's what the Embedding module covers next.",
+      backHome: '← Back to home',
+      next: 'Next · Embedding →',
+    },
+  },
+  // ============== EMBEDDING ==============
+  embedding: {
+    nav: { pageIndex: '02 / 08', backToHome: '← LLM Visualizer home' },
+    eyebrow: 'CHAPTER 02 · EMBEDDING',
+    hero: {
+      title1: 'Tokens are just IDs. To compute on them, we map each token into a',
+      titleHighlight: 'high-dimensional vector',
+      lede:
+        "A model can't reason directly with the integer ID of a token. It first looks the token up in an embedding matrix and pulls out a long vector (typically 768 to 12288 numbers). The geometry of these vectors — how close two vectors are — is what lets the model capture meaning. Embedding is the gateway from \"discrete IDs\" to \"continuous space where math works.\"",
+    },
+    outro: {
+      body:
+        "Embeddings give every token a position in semantic space — but at this point the model still has no idea about word order. The next step (Positional Encoding) injects position information into these vectors.",
+      backHome: '← Back to home',
+      next: 'Next · Positional Encoding →',
+    },
+  },
+  // ============== POSITIONAL ENCODING ==============
+  positional: {
+    nav: { pageIndex: '03 / 08', backToHome: '← LLM Visualizer home' },
+    eyebrow: 'CHAPTER 03 · POSITIONAL ENCODING',
+    hero: {
+      title1: 'A Transformer processes all tokens in parallel — by default, it has no idea',
+      titleHighlight: 'which token comes first',
+      lede:
+        '"She loves him" and "He loves her" share the same set of tokens. To distinguish them, the model has to know each token\'s position. The trick (Vaswani et al., 2017): add a position-specific signal directly into each token\'s embedding vector — that way, identical tokens at different positions become different inputs.',
+    },
+    outro: {
+      body:
+        'Once tokens carry position information, the Transformer can use attention to relate them to each other. That\'s where the next module — the Transformer block itself — comes in.',
+      backHome: '← Back to home',
+      next: 'Next · Transformer →',
+    },
+  },
+  // ============== TRANSFORMER ==============
+  transformer: {
+    nav: { pageIndex: '04 / 08', backToHome: '← LLM Visualizer home' },
+    eyebrow: 'CHAPTER 04 · TRANSFORMER',
+    hero: {
+      title1: 'The Transformer block: where every token',
+      titleHighlight: 'looks at',
+      title2: 'every other token, and reasons about the result',
+      lede:
+        'Up to here, every token holds a vector that encodes "what it is" plus "where it sits." But these vectors are still independent — they don\'t know about each other. The Transformer block changes that with two operations, repeated dozens of times: self-attention (let each token query others) and a feed-forward network (process the result). After this stack, every token carries context-aware meaning.',
+    },
+    outro: {
+      body:
+        'After many Transformer layers, the final token sits on a vector rich with context. The output layer then turns that vector into a probability over every word in the vocabulary.',
+      backHome: '← Back to home',
+      next: 'Next · Output Layer →',
+    },
+  },
+  // ============== LOGITS / OUTPUT LAYER ==============
+  logits: {
+    nav: { pageIndex: '05 / 08', backToHome: '← LLM Visualizer home' },
+    eyebrow: 'CHAPTER 05 · OUTPUT LAYER',
+    hero: {
+      title1: 'How does the model turn its internal vector into',
+      titleHighlight: 'a probability over every word in the vocabulary',
+      title2: '?',
+      lede:
+        "After the Transformer stack, the last token's vector encodes everything the model has \"figured out.\" To produce the next token, that vector goes through one final linear projection (the unembedding / LM head) — yielding a raw score (logit) for every word in the vocabulary — and then through softmax, which converts those scores into a probability distribution.",
+    },
+    outro: {
+      body:
+        "Now we have a probability distribution over the entire vocabulary. The next step (Sampling) decides how to pick one token from this distribution.",
+      backHome: '← Back to home',
+      next: 'Next · Sampling →',
+    },
+  },
+  // ============== DECODING LOOP / DETOKENIZATION ==============
+  loop: {
+    nav: { pageIndex: '07 / 08', backToHome: '← LLM Visualizer home' },
+    eyebrow: 'CHAPTER 07 · DETOKENIZATION & LOOP',
+    hero: {
+      title1: 'A model never generates a whole sentence at once — it generates',
+      titleHighlight: 'one token at a time, in a loop',
+      title2: '',
+      lede:
+        "After steps 1–6, the model has produced one token. It detokenizes that token back into text, appends it to the input, and runs all six steps again to produce the next token. This loop continues until a stop condition triggers — and that's where most of the production-engineering knobs live: streaming, max_tokens, stop sequences, KV cache.",
+    },
+    outro: {
+      body:
+        "That's the full pipeline — input text in, one token out, repeated until done. From here, you have a complete mental model of how an LLM produces text.",
+      backHome: '← Back to home',
+      next: 'Back to start →',
+    },
+  },
 };
 
 // 中文 dictionary — 与 en 字典 schema 完全一致；保留原中文版的叙事风格不动。
@@ -381,6 +517,135 @@ const zh = {
       body: '现在你已经理解了：模型如何从概率分布里挑出下一个词。但模型不是只挑一个词——它要把这个词加回去，再挑下一个，直到一段话写完。',
       backHome: '← 回到首页',
       next: '下一章 · Detokenization →',
+    },
+  },
+  // ============== TOKENIZATION ==============
+  tokenization: {
+    nav: { pageIndex: '01 / 08', backToHome: '← LLM Visualizer 首页' },
+    eyebrow: '分词 · Tokenization',
+    hero: {
+      title1: '模型不是按"字"读你的话，而是',
+      titleHighlight: '按 token',
+      lede:
+        'token 是模型的基本"识别单位"——可能是一个完整的词、一个词缀、半个汉字、或单纯的字节。你看到的"字数"和模型看到的"token 数"经常对不上，这个差异直接决定了 API 成本、上下文窗口的真实容量、以及大量产品 bug 的成因。下面 5 节带你彻底搞清楚 token 的来龙去脉。',
+    },
+    ch1: {
+      title1: '先决知识：',
+      titleHighlight: '字节、字符、token',
+      title2: '是三回事',
+      body:
+        '字节、字符、token 是三个不同层面，经常被混为一谈。下面用一个互动演示把它们的关系一次讲清——搞懂之后，「为什么 GPT-2 时代中文每字 ≈ 3 token」这种事实就一目了然了。',
+      stageLabel: '字符 → 字节 → token 三层 →',
+    },
+    ch2: {
+      title: '动手玩：看模型怎么切你的句子',
+      body: '下面这个工具用的是 OpenAI 的真实 tokenizer（前端跑，无需 API）。输入任何中英文 / emoji / 代码，立刻看切分结果。',
+      stageLabel: '实时分词 · 你的回合 →',
+    },
+    ch3: {
+      title1: '"中文 token 比英文贵 2-3 倍"——',
+      titleHighlight: '这是过时的说法',
+      body:
+        '从 GPT-2（r50k_base）到 GPT-4o（o200k_base），同一段中文的 token 数往往掉了 50%+。原因不是模型变聪明，而是 BPE 训练数据里加入了大量中文，常见词组被合并成了单个 token。如果你的学习资料里看到"中文每字 2-3 token"——那是 GPT-2 时代的事实。',
+      stageLabel: '三个时代的对比 →',
+    },
+    ch4: {
+      title1: '把 token 数',
+      titleHighlight: '折算成钱',
+      body: '做产品规模化估算时，要算的是"单次 token 数 × 调用次数 × 单价"。常见误区：把单次价格按"几分钱"忽略，一规模化就突然超预算。',
+      stageLabel: '规模化成本 →',
+    },
+    ch5: {
+      eyebrow: 'PM 视角',
+      title: '从 token 到产品决策',
+    },
+    outro: {
+      body: '切完 token，下一步模型就要把每个 token 映射成一个高维向量（embedding），让"语义相近的词在向量空间里距离近"。这是接下来 Embedding 模块要讲的事。',
+      backHome: '← 回到首页',
+      next: '下一章 · Embedding →',
+    },
+  },
+  // ============== EMBEDDING ==============
+  embedding: {
+    nav: { pageIndex: '02 / 08', backToHome: '← LLM Visualizer 首页' },
+    eyebrow: '嵌入 · Embedding',
+    hero: {
+      title1: '每个 token 都被变成',
+      titleHighlight: '一组数字',
+      lede:
+        '切完 token，模型还看不懂。它要先把每个 token 映射成一个高维向量（说人话：一组浮点数，比如 4096 个数字串成一行）——这就是模型"理解"这个 token 的内部表示。语义相近的词，向量在这个高维空间里方向也相近——这就是 RAG / 语义搜索的全部魔法。',
+    },
+    outro: {
+      body: '每个 token 现在都是一个高维向量了。但 Transformer 处理输入时是"并行看所有 token"——它本身不知道谁前谁后。下一步要给每个位置加一个独特的"指纹"，让模型分得清"我打你"和"你打我"。',
+      backHome: '← 回到首页',
+      next: '下一章 · Positional Encoding →',
+    },
+  },
+  // ============== POSITIONAL ENCODING ==============
+  positional: {
+    nav: { pageIndex: '03 / 08', backToHome: '← LLM Visualizer 首页' },
+    eyebrow: '位置编码 · Positional Encoding',
+    hero: {
+      title1: 'Transformer 不区分词序——需要给每个位置加一个',
+      titleHighlight: '"指纹"',
+      lede:
+        'embedding 把每个 token 变成了向量——但 Transformer 处理输入时是并行看所有 token，本身没有"先后"概念。这一步要解决的问题：让模型分得清"我打你"和"你打我"。',
+    },
+    outro: {
+      body: '现在每个 token 都带着"语义信息（embedding）"+ "位置信息（PE）"了——下一步才是 LLM 真正的"理解"环节：Transformer 用注意力机制让每个 token 看向其他相关 token，逐层抽象出复杂语义。',
+      backHome: '← 回到首页',
+      next: '下一章 · Transformer →',
+    },
+  },
+  // ============== TRANSFORMER ==============
+  transformer: {
+    nav: { pageIndex: '04 / 08', backToHome: '← LLM Visualizer 首页' },
+    eyebrow: '变换器 · Transformer',
+    hero: {
+      title1: '模型怎么',
+      titleHighlight: '"理解"',
+      title2: '上下文',
+      lede:
+        '这是 LLM 真正"理解"输入的核心环节。一层 Transformer 主要做两件事：让 token 之间沟通（Attention），让每个 token 自己消化（FFN）。下面我们先建立这两件事的直觉，再讲它们怎么配合工作，最后讲外面包的"工程支持"。',
+    },
+    outro: {
+      body: '走完 N 层 Transformer 之后，每个 token 都被丰富的上下文信息"灌满"了。下一步：把最后一层最后一个 token 的向量映射回整个词表的概率分布——这就是输出层 / Logits。',
+      backHome: '← 回到首页',
+      next: '下一章 · 输出层 / Logits →',
+    },
+  },
+  // ============== LOGITS ==============
+  logits: {
+    nav: { pageIndex: '05 / 08', backToHome: '← LLM Visualizer 首页' },
+    eyebrow: '输出层 · Logits',
+    hero: {
+      title1: '从最后一层向量到',
+      titleHighlight: '词表概率分布',
+      title2: '',
+      lede:
+        '走完 N 层 Transformer 后，每个位置都是一个 d 维向量。这一步的任务：把最后一个位置的向量映射成"下一个 token 是哪个词的概率"。数学上就两件事：① 乘以 unembedding 矩阵 → logits；② 过 softmax → 概率。',
+    },
+    outro: {
+      body: '有了概率分布——下一步就是从中"挑一个"。直接选概率最高的（贪婪），还是按概率随机抽（多样化）？这就是 Sampling 模块要解决的问题。',
+      backHome: '← 回到首页',
+      next: '下一章 · Sampling →',
+    },
+  },
+  // ============== LOOP ==============
+  loop: {
+    nav: { pageIndex: '07 / 08', backToHome: '← LLM Visualizer 首页' },
+    eyebrow: '解码循环 · Detokenization & Loop',
+    hero: {
+      title1: '模型一次只生成一个 token——靠',
+      titleHighlight: '循环',
+      title2: '写出一段话',
+      lede:
+        '前 6 个模块讲了模型前向计算的前 6 步（Tokenization → Embedding → Positional → Transformer → Logits → Sampling），只能预测下一个 token。但 LLM 输出一段话靠的是把这个 token 接回输入末尾再走一遍——这一节讲第 7 步 detokenization + 整体循环，以及它衍生的 PM 关切点：streaming 和 max_tokens。',
+    },
+    outro: {
+      body: '走到这里，你已经理解了 LLM 从输入到输出的完整流水线 + 循环机制。最后一个模块是 Prompt 结构——讲 system / user / assistant 三个角色，以及 prompt 注入安全。',
+      backHome: '← 回到首页',
+      next: '下一章 · Prompt 结构（待开发）',
     },
   },
 };

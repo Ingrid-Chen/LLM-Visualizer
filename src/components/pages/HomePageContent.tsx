@@ -17,7 +17,7 @@ import {
 import InlineExampleSwitcher from '@/components/sampling/InlineExampleSwitcher';
 import LanguageSwitcher from '@/components/ui/LanguageSwitcher';
 import { SquiggleUnderline, WavyDivider } from '@/components/ui/SketchDecor';
-import { useT } from '@/lib/i18n/LangContext';
+import { useLang, useT } from '@/lib/i18n/LangContext';
 import type { IndexData, PipelineData, PipelineIndexData } from '@/lib/types';
 
 // step key 到字典 path 的桥——title/oneLiner 在渲染时通过 t() 动态取。
@@ -40,6 +40,7 @@ const STEP_META: {
 
 export default function HomePageContent() {
   const t = useT();
+  const lang = useLang();
   const [pipelineIndex, setPipelineIndex] = useState<PipelineIndexData | null>(null);
   const [samplingIndex, setSamplingIndex] = useState<IndexData | null>(null);
   const [selectedId, setSelectedId] = useState<string | null>(null);
@@ -59,7 +60,12 @@ export default function HomePageContent() {
       .then(([pi, si]) => {
         setPipelineIndex(pi);
         setSamplingIndex(si);
-        if (pi.examples.length > 0 && !selectedId) setSelectedId(pi.examples[0].id);
+        if (pi.examples.length > 0 && !selectedId) {
+          // 按当前 locale 选默认例子：英文版 → 英文 prompt；中文版 → 中文 prompt
+          const preferredId = lang === 'en' ? 'capital_france_en' : 'capital_china';
+          const fallback = pi.examples.find((e) => e.id === preferredId)?.id ?? pi.examples[0].id;
+          setSelectedId(fallback);
+        }
       })
       .catch((err) => console.error('failed to load homepage data:', err));
     // eslint-disable-next-line react-hooks/exhaustive-deps

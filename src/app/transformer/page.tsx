@@ -11,10 +11,14 @@ import OverviewDiagram from '@/components/transformer/OverviewDiagram';
 import PMPerspectiveCards from '@/components/transformer/PMPerspectiveCards';
 import QKVDemo from '@/components/transformer/QKVDemo';
 import TransformerBlockDiagram from '@/components/transformer/TransformerBlockDiagram';
+import LanguageSwitcher from '@/components/ui/LanguageSwitcher';
 import { ChapterNumber, SquiggleUnderline, WavyDivider } from '@/components/ui/SketchDecor';
+import { useLang, useT, localizedHref } from '@/lib/i18n/LangContext';
 import type { AttentionData } from '@/lib/types';
 
 export default function TransformerPage() {
+  const t = useT();
+  const lang = useLang();
   const [attentionData, setAttentionData] = useState<AttentionData | null>(null);
 
   useEffect(() => {
@@ -27,31 +31,31 @@ export default function TransformerPage() {
   return (
     <main className="container-wide py-8 sm:py-12 pb-20">
       {/* 顶部导航 */}
-      <nav className="mb-8 flex items-center justify-between text-sm">
-        <Link href="/" className="text-text-muted hover:text-ink-dark transition-colors">
-          ← LLM Visualizer 首页
+      <nav className="mb-8 flex items-center justify-between text-sm gap-3">
+        <Link href={localizedHref(lang, '/')} className="text-text-muted hover:text-ink-dark transition-colors">
+          {t('transformer.nav.backToHome')}
         </Link>
-        <span className="text-text-muted font-mono">04 / 08</span>
+        <div className="flex items-center gap-3">
+          <LanguageSwitcher />
+          <span className="text-text-muted font-mono">{t('transformer.nav.pageIndex')}</span>
+        </div>
       </nav>
 
       {/* === Hero === */}
       <header className="mb-10">
         <div className="flex items-center gap-3 mb-3">
-          <span className="font-mono text-xs uppercase tracking-[0.25em] text-ember-dark">变换器 · Transformer</span>
+          <span className="font-mono text-xs uppercase tracking-[0.25em] text-ember-dark">{t('transformer.eyebrow')}</span>
           <span className="flex-1 h-px bg-ember/30" />
         </div>
         <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl text-ink-dark leading-[1.15] mb-4">
-          模型怎么
+          {t('transformer.hero.title1')}
           <span className="relative inline-block text-ember-dark mx-1">
-            "理解"
+            {t('transformer.hero.titleHighlight')}
             <SquiggleUnderline className="text-ember" />
           </span>
-          上下文
+          {' '}{t('transformer.hero.title2')}
         </h1>
-        <p className="text-base text-text-muted max-w-prose leading-relaxed">
-          这是 LLM 真正"理解"输入的核心环节。一层 Transformer 主要做两件事：让 token 之间<strong className="text-text">沟通</strong>（Attention），让每个 token 自己<strong className="text-text">消化</strong>（FFN）。
-          下面我们先建立这两件事的直觉，再讲它们怎么配合工作，最后讲外面包的"工程支持"。
-        </p>
+        <p className="text-base text-text-muted max-w-prose leading-relaxed">{t('transformer.hero.lede')}</p>
       </header>
 
       <WavyDivider className="text-ink/20 mb-10" />
@@ -228,16 +232,13 @@ export default function TransformerPage() {
 
       {/* 章节出口 */}
       <section className="mt-12 pt-8 border-t-2 border-dashed border-ink/15">
-        <p className="text-text-muted leading-relaxed mb-5 max-w-prose">
-          走完 N 层 Transformer 之后，每个 token 都被丰富的上下文信息"灌满"了。
-          下一步：把最后一层最后一个 token 的向量映射回整个词表的概率分布——这就是输出层 / Logits。
-        </p>
+        <p className="text-text-muted leading-relaxed mb-5 max-w-prose">{t('transformer.outro.body')}</p>
         <div className="flex flex-wrap gap-3 text-sm">
-          <Link href="/" className="btn-secondary">
-            ← 回到首页
+          <Link href={localizedHref(lang, '/')} className="btn-secondary">
+            {t('transformer.outro.backHome')}
           </Link>
-          <Link href="/logits" className="btn-primary">
-            下一章 · 输出层 / Logits →
+          <Link href={localizedHref(lang, '/logits')} className="btn-primary">
+            {t('transformer.outro.next')}
           </Link>
         </div>
       </section>

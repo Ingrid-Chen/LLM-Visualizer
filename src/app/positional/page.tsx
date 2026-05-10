@@ -1,3 +1,5 @@
+'use client';
+
 import Link from 'next/link';
 
 import DeepDivePositional from '@/components/positional/DeepDivePositional';
@@ -5,38 +7,40 @@ import EmbeddingPlusPE from '@/components/positional/EmbeddingPlusPE';
 import PMPerspectiveCards from '@/components/positional/PMPerspectiveCards';
 import PositionalHeatmap from '@/components/positional/PositionalHeatmap';
 import WordOrderDemo from '@/components/positional/WordOrderDemo';
+import LanguageSwitcher from '@/components/ui/LanguageSwitcher';
 import { ChapterNumber, SquiggleUnderline, WavyDivider } from '@/components/ui/SketchDecor';
+import { useLang, useT, localizedHref } from '@/lib/i18n/LangContext';
 
 export default function PositionalPage() {
+  const t = useT();
+  const lang = useLang();
   return (
     <main className="container-wide py-8 sm:py-12 pb-20">
       {/* 顶部导航 */}
-      <nav className="mb-8 flex items-center justify-between text-sm">
-        <Link href="/" className="text-text-muted hover:text-ink-dark transition-colors">
-          ← LLM Visualizer 首页
+      <nav className="mb-8 flex items-center justify-between text-sm gap-3">
+        <Link href={localizedHref(lang, '/')} className="text-text-muted hover:text-ink-dark transition-colors">
+          {t('positional.nav.backToHome')}
         </Link>
-        <span className="text-text-muted font-mono">03 / 08</span>
+        <div className="flex items-center gap-3">
+          <LanguageSwitcher />
+          <span className="text-text-muted font-mono">{t('positional.nav.pageIndex')}</span>
+        </div>
       </nav>
 
       {/* === Hero === */}
       <header className="mb-10">
         <div className="flex items-center gap-3 mb-3">
-          <span className="font-mono text-xs uppercase tracking-[0.25em] text-ember-dark">位置编码 · Positional Encoding</span>
+          <span className="font-mono text-xs uppercase tracking-[0.25em] text-ember-dark">{t('positional.eyebrow')}</span>
           <span className="flex-1 h-px bg-ember/30" />
         </div>
         <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl text-ink-dark leading-[1.15] mb-4">
-          Transformer 不区分词序——
-          <br className="hidden sm:block" />
-          需要给每个位置加一个
+          {t('positional.hero.title1')}
           <span className="relative inline-block text-ember-dark mx-1">
-            "指纹"
+            {t('positional.hero.titleHighlight')}
             <SquiggleUnderline className="text-ember" />
           </span>
         </h1>
-        <p className="text-base text-text-muted max-w-prose leading-relaxed">
-          embedding 把每个 token 变成了向量——但 Transformer 处理输入时是<strong className="text-text">并行看所有 token</strong>，本身没有"先后"概念。
-          这一步要解决的问题：让模型分得清"我打你"和"你打我"。
-        </p>
+        <p className="text-base text-text-muted max-w-prose leading-relaxed">{t('positional.hero.lede')}</p>
       </header>
 
       <WavyDivider className="text-ink/20 mb-10" />
@@ -118,16 +122,13 @@ export default function PositionalPage() {
 
       {/* 章节出口 */}
       <section className="mt-12 pt-8 border-t-2 border-dashed border-ink/15">
-        <p className="text-text-muted leading-relaxed mb-5 max-w-prose">
-          现在每个 token 都带着"语义信息（embedding）"+ "位置信息（PE）"了——下一步才是 LLM 真正的"理解"环节：
-          Transformer 用注意力机制让每个 token 看向其他相关 token，逐层抽象出复杂语义。
-        </p>
+        <p className="text-text-muted leading-relaxed mb-5 max-w-prose">{t('positional.outro.body')}</p>
         <div className="flex flex-wrap gap-3 text-sm">
-          <Link href="/" className="btn-secondary">
-            ← 回到首页
+          <Link href={localizedHref(lang, '/')} className="btn-secondary">
+            {t('positional.outro.backHome')}
           </Link>
-          <Link href="/transformer" className="btn-primary">
-            下一章 · Transformer →
+          <Link href={localizedHref(lang, '/transformer')} className="btn-primary">
+            {t('positional.outro.next')}
           </Link>
         </div>
       </section>
