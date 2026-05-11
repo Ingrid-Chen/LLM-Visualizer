@@ -60,36 +60,37 @@ export default function TransformerPage() {
 
       <WavyDivider className="text-ink/20 mb-10" />
 
-      {/* === 章节 1：概览（先讲两个核心模块的作用） === */}
       <section className="mb-12 grid grid-cols-[auto_1fr] gap-x-4 sm:gap-x-6">
         <ChapterNumber n="01" />
         <div>
           <h2 className="font-serif text-xl sm:text-2xl text-ink-dark mb-2">
-            一层 Transformer = <span className="relative inline-block text-ember-dark mx-0.5">两件事<SquiggleUnderline className="text-ember/70" /></span>
+            {t('transformer.ch1.title1')}{' '}
+            <span className="relative inline-block text-ember-dark mx-0.5">
+              {t('transformer.ch1.titleHighlight')}
+              <SquiggleUnderline className="text-ember/70" />
+            </span>
           </h2>
-          <p className="text-sm text-text-muted mb-5 max-w-prose">
-            先建立直觉：这一层在做什么。本章不讲数学、不讲实现细节——
-            只用一张图 + 两个生活化比喻让你抓住核心机制。
-          </p>
+          <p className="text-sm text-text-muted mb-5 max-w-prose">{t('transformer.ch1.body')}</p>
           <OverviewDiagram />
         </div>
       </section>
 
       <WavyDivider className="text-ink/20 mb-10" />
 
-      {/* === 章节 2：QKV 角色分工 —— Attention 内部 === */}
       <section className="mb-12 grid grid-cols-[auto_1fr] gap-x-4 sm:gap-x-6">
         <ChapterNumber n="02" />
         <div>
           <h2 className="font-serif text-xl sm:text-2xl text-ink-dark mb-2">
-            Attention 内部：<span className="relative inline-block text-ember-dark">Q / K / V<SquiggleUnderline className="text-ember/70" /></span> 三个角色
+            {t('transformer.ch2.title1')}
+            <span className="relative inline-block text-ember-dark">
+              {t('transformer.ch2.titleHighlight')}
+              <SquiggleUnderline className="text-ember/70" />
+            </span>
+            {' '}{t('transformer.ch2.title2')}
           </h2>
-          <p className="text-sm text-text-muted mb-5 max-w-prose">
-            Attention 的"沟通"具体怎么做？每个 token 同时扮演三个角色：Query（问什么）、Key（看哪里）、Value（取什么）。
-            用一个具体例子讲清它们怎么配合解决"指代消解"。
-          </p>
+          <p className="text-sm text-text-muted mb-5 max-w-prose">{t('transformer.ch2.body')}</p>
           <div className="stage">
-            <span className="stage-label">三个角色的分工 →</span>
+            <span className="stage-label">{t('transformer.ch2.stageLabel')}</span>
             <QKVDemo />
           </div>
         </div>
@@ -97,71 +98,50 @@ export default function TransformerPage() {
 
       <WavyDivider className="text-ink/20 mb-10" />
 
-      {/* === 章节 3：注意力可视化（互动主菜） === */}
       <section className="mb-12 grid grid-cols-[auto_1fr] gap-x-4 sm:gap-x-6">
         <ChapterNumber n="03" />
         <div>
           <h2 className="font-serif text-xl sm:text-2xl text-ink-dark mb-2">
-            <span className="relative inline-block text-ember-dark">每个 token "看"哪里<SquiggleUnderline className="text-ember/70" /></span>——互动可视化
+            <span className="relative inline-block text-ember-dark">
+              {t('transformer.ch3.titleHighlight')}
+              <SquiggleUnderline className="text-ember/70" />
+            </span>
+            {t('transformer.ch3.title2')}
           </h2>
-          <p className="text-sm text-text-muted mb-4 max-w-prose">
-            实际句子里，attention 最有意思的地方是处理<strong className="text-text">三类"困难情况"</strong>——
-            如果模型不"看上下文"，这三类问题就答不对。下面三个例子各对应一类，看看 attention 怎么解决：
-          </p>
+          <p className="text-sm text-text-muted mb-4 max-w-prose">{t('transformer.ch3.intro')}</p>
 
-          {/* 三类语言现象的解释卡片 */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-5">
-            <div className="p-3 rounded-lg border-2 border-cream-200 bg-cream-50">
-              <div className="text-[11px] uppercase tracking-wider text-ember-dark font-medium mb-1">指代消解</div>
-              <p className="text-xs text-text-muted leading-relaxed">
-                代词或泛指词究竟指前面哪个具体的人 / 物。
-                <span className="block mt-1 text-text">例：「她」指 Lucy 还是 Mary？</span>
-              </p>
-            </div>
-            <div className="p-3 rounded-lg border-2 border-cream-200 bg-cream-50">
-              <div className="text-[11px] uppercase tracking-wider text-ember-dark font-medium mb-1">长距离依赖</div>
-              <p className="text-xs text-text-muted leading-relaxed">
-                一个动词的真正对象被一堆修饰词隔开。
-                <span className="block mt-1 text-text">例：「看到」一只流浪的小黑「猫」</span>
-              </p>
-            </div>
-            <div className="p-3 rounded-lg border-2 border-cream-200 bg-cream-50">
-              <div className="text-[11px] uppercase tracking-wider text-ember-dark font-medium mb-1">上下文歧义</div>
-              <p className="text-xs text-text-muted leading-relaxed">
-                一个多义词得靠上下文判断到底是哪个意思。
-                <span className="block mt-1 text-text">例：「苹果」是水果还是公司？</span>
-              </p>
-            </div>
+            {[0, 1, 2].map((i) => (
+              <div key={i} className="p-3 rounded-lg border-2 border-cream-200 bg-cream-50">
+                <div className="text-[11px] uppercase tracking-wider text-ember-dark font-medium mb-1">
+                  {t(`transformer.ch3.cards.${i}.title`)}
+                </div>
+                <p className="text-xs text-text-muted leading-relaxed">{t(`transformer.ch3.cards.${i}.body`)}</p>
+              </div>
+            ))}
           </div>
 
-          <p className="text-sm text-text-muted mb-4 max-w-prose">
-            选个例子，鼠标悬停某个 token，看它在<strong className="text-text">不同层</strong>的注意力权重分布——
-            观察 attention 怎么从第 1 层"看邻居"逐层进化到第 3 层"跨距离理解语义"。
-          </p>
+          <p className="text-sm text-text-muted mb-4 max-w-prose">{t('transformer.ch3.hint')}</p>
 
-          {/* 预备知识：层 vs 头 */}
           <div className="rounded-lg bg-cream-100 border border-ink/15 p-3 text-xs leading-relaxed space-y-2 mb-5">
-            <div className="text-[10px] uppercase tracking-wider text-text-muted/80">📚 进入交互前先分清两个名词</div>
+            <div className="text-[10px] uppercase tracking-wider text-text-muted/80">{t('transformer.ch3.prereqHeading')}</div>
             <div className="flex items-baseline gap-2">
-              <span className="font-medium text-text shrink-0">🧱 层（Layer）</span>
-              <span className="text-text-muted">= 纵向堆叠的处理阶段——前一层输出给后一层做输入。每往上一层，理解更"深"。</span>
+              <span className="font-medium text-text shrink-0">{t('transformer.ch3.prereqLayerLabel')}</span>
+              <span className="text-text-muted">{t('transformer.ch3.prereqLayerBody')}</span>
             </div>
             <div className="flex items-baseline gap-2">
-              <span className="font-medium text-text shrink-0">🎭 头（Head）</span>
-              <span className="text-text-muted">= 同一层内并行的"视角"——一个层里 N 个头同时看不同关系（语法 / 指代 / 情感）。</span>
+              <span className="font-medium text-text shrink-0">{t('transformer.ch3.prereqHeadLabel')}</span>
+              <span className="text-text-muted">{t('transformer.ch3.prereqHeadBody')}</span>
             </div>
-            <div className="text-text-muted/80 pt-1.5 border-t border-ink/10">
-              下面演示的是 <strong className="text-text">"层"</strong>（实际模型有 24-120 层；这里简化成 3 层代表早 / 中 / 深的典型行为）。
-              每层内部的多个头被平均了——这样图能简化到一根连线，而不是 32 根。
-            </div>
+            <div className="text-text-muted/80 pt-1.5 border-t border-ink/10">{t('transformer.ch3.prereqNote')}</div>
           </div>
 
           <div className="stage">
-            <span className="stage-label">悬停 token 看连线 →</span>
+            <span className="stage-label">{t('transformer.ch3.stageLabel')}</span>
             {attentionData ? (
               <AttentionMatrixViz data={attentionData} />
             ) : (
-              <p className="text-text-muted">加载中…</p>
+              <p className="text-text-muted">{t('common.loading')}</p>
             )}
           </div>
         </div>
@@ -169,44 +149,41 @@ export default function TransformerPage() {
 
       <WavyDivider className="text-ink/20 mb-10" />
 
-      {/* === 章节 4：FFN === */}
       <section className="mb-12 grid grid-cols-[auto_1fr] gap-x-4 sm:gap-x-6">
         <ChapterNumber n="04" />
         <div>
           <h2 className="font-serif text-xl sm:text-2xl text-ink-dark mb-2">
-            前馈网络（<span className="relative inline-block text-ember-dark">FFN<SquiggleUnderline className="text-ember/70" /></span>）：每个 token 自己"消化"
+            {t('transformer.ch4.title1')}
+            <span className="relative inline-block text-ember-dark">
+              {t('transformer.ch4.titleHighlight')}
+              <SquiggleUnderline className="text-ember/70" />
+            </span>
+            {t('transformer.ch4.title2')}
           </h2>
-          <p className="text-sm text-text-muted mb-5 max-w-prose">
-            Attention 让 token 之间沟通后，FFN 让每个 token 单独做一遍"思考"——
-            从自身向量里提取相关知识 / 特征。结构远比 attention 简单，但参数量占整个模型的 2/3+。
-          </p>
+          <p className="text-sm text-text-muted mb-5 max-w-prose">{t('transformer.ch4.body')}</p>
           <FFNCard />
         </div>
       </section>
 
       <WavyDivider className="text-ink/20 mb-10" />
 
-      {/* === 章节 5：归一化 + 残差连接 ——"工程支持" === */}
       <section className="mb-12 grid grid-cols-[auto_1fr] gap-x-4 sm:gap-x-6">
         <ChapterNumber n="05" />
         <div>
           <h2 className="font-serif text-xl sm:text-2xl text-ink-dark mb-2">
-            外面还要包：<span className="relative inline-block text-ember-dark">归一化 + 残差连接<SquiggleUnderline className="text-ember/70" /></span>
+            {t('transformer.ch5.title1')}
+            <span className="relative inline-block text-ember-dark">
+              {t('transformer.ch5.titleHighlight')}
+              <SquiggleUnderline className="text-ember/70" />
+            </span>
           </h2>
-          <p className="text-sm text-text-muted mb-5 max-w-prose">
-            到这里你已经理解 Attention 和 FFN 是核心机制。但实际模型不是简单地「Attention → FFN」串起来——
-            外面还包了两层<strong className="text-text">工程支持</strong>，没有它们超过几层的网络就训不起来。
-          </p>
+          <p className="text-sm text-text-muted mb-5 max-w-prose">{t('transformer.ch5.body')}</p>
 
-          {/* 两个概念卡片：是什么 + 数学 + 目的 */}
           <NormResidualExplainer />
 
-          {/* 然后展示它们在 Block 中的位置 */}
-          <p className="text-sm text-text-muted mt-8 mb-3 max-w-prose">
-            理解了两个概念后，看看它们在一个 Block 中具体长什么样：
-          </p>
+          <p className="text-sm text-text-muted mt-8 mb-3 max-w-prose">{t('transformer.ch5.blockIntro')}</p>
           <div className="stage">
-            <span className="stage-label">完整 Block 流程 →</span>
+            <span className="stage-label">{t('transformer.ch5.stageLabel')}</span>
             <TransformerBlockDiagram />
           </div>
         </div>
@@ -214,13 +191,12 @@ export default function TransformerPage() {
 
       <WavyDivider className="text-ink/20 mb-10" />
 
-      {/* === 章节 6：PM 视角 === */}
       <section className="mb-12">
         <div className="mb-6 flex items-center gap-3">
           <ChapterNumber n="06" />
           <div>
-            <p className="text-sm uppercase tracking-widest text-ember-dark">PM 视角</p>
-            <h2 className="font-serif text-xl sm:text-2xl text-ink-dark">从 Transformer 到产品决策</h2>
+            <p className="text-sm uppercase tracking-widest text-ember-dark">{t('transformer.ch6.eyebrow')}</p>
+            <h2 className="font-serif text-xl sm:text-2xl text-ink-dark">{t('transformer.ch6.title')}</h2>
           </div>
         </div>
         <PMPerspectiveCards />

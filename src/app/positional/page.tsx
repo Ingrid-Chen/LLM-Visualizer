@@ -50,13 +50,15 @@ export default function PositionalPage() {
         <ChapterNumber n="01" />
         <div>
           <h2 className="font-serif text-xl sm:text-2xl text-ink-dark mb-2">
-            为什么需要<span className="relative inline-block text-ember-dark mx-0.5">位置编码<SquiggleUnderline className="text-ember/70" /></span>
+            {t('positional.ch1.title1')}
+            <span className="relative inline-block text-ember-dark mx-0.5">
+              {t('positional.ch1.titleHighlight')}
+              <SquiggleUnderline className="text-ember/70" />
+            </span>
           </h2>
-          <p className="text-sm text-text-muted mb-5 max-w-prose">
-            一个直观的反例：完全相同的 token，顺序不同语义就完全不同。如果模型看不到顺序，它就分不清这两句话。
-          </p>
+          <p className="text-sm text-text-muted mb-5 max-w-prose">{t('positional.ch1.body')}</p>
           <div className="stage">
-            <span className="stage-label">同样三个字，意思相反 →</span>
+            <span className="stage-label">{t('positional.ch1.stageLabel')}</span>
             <WordOrderDemo />
           </div>
         </div>
@@ -64,19 +66,19 @@ export default function PositionalPage() {
 
       <WavyDivider className="text-ink/20 mb-10" />
 
-      {/* === 章节 2：位置编码长什么样 === */}
       <section className="mb-12 grid grid-cols-[auto_1fr] gap-x-4 sm:gap-x-6">
         <ChapterNumber n="02" />
         <div>
           <h2 className="font-serif text-xl sm:text-2xl text-ink-dark mb-2">
-            位置编码长什么样：<span className="relative inline-block text-ember-dark">经典 sinusoidal<SquiggleUnderline className="text-ember/70" /></span>
+            {t('positional.ch2.title1')}{' '}
+            <span className="relative inline-block text-ember-dark">
+              {t('positional.ch2.titleHighlight')}
+              <SquiggleUnderline className="text-ember/70" />
+            </span>
           </h2>
-          <p className="text-sm text-text-muted mb-5 max-w-prose">
-            原始 Transformer 论文（Vaswani 2017）用 sin / cos 函数给每个位置生成一个独特向量。
-            把它画成 heatmap，能看到典型的"波浪图案"。
-          </p>
+          <p className="text-sm text-text-muted mb-5 max-w-prose">{t('positional.ch2.body')}</p>
           <div className="stage">
-            <span className="stage-label">每个位置的"指纹" →</span>
+            <span className="stage-label">{t('positional.ch2.stageLabel')}</span>
             <PositionalHeatmap />
           </div>
         </div>
@@ -84,19 +86,19 @@ export default function PositionalPage() {
 
       <WavyDivider className="text-ink/20 mb-10" />
 
-      {/* === 章节 3：embedding + PE === */}
       <section className="mb-12 grid grid-cols-[auto_1fr] gap-x-4 sm:gap-x-6">
         <ChapterNumber n="03" />
         <div>
           <h2 className="font-serif text-xl sm:text-2xl text-ink-dark mb-2">
-            把"指纹"<span className="relative inline-block text-ember-dark mx-0.5">加到 embedding 上<SquiggleUnderline className="text-ember/70" /></span>
+            {t('positional.ch3.title1')}
+            <span className="relative inline-block text-ember-dark mx-0.5">
+              {t('positional.ch3.titleHighlight')}
+              <SquiggleUnderline className="text-ember/70" />
+            </span>
           </h2>
-          <p className="text-sm text-text-muted mb-5 max-w-prose">
-            位置编码不是单独传给模型的——它直接<strong className="text-text">加</strong>到 token embedding 上，得到"最终输入向量"。
-            这样同一个 token 在不同位置就变成了不同的向量。
-          </p>
+          <p className="text-sm text-text-muted mb-5 max-w-prose">{t('positional.ch3.body')}</p>
           <div className="stage">
-            <span className="stage-label">同一个 token 在不同位置 →</span>
+            <span className="stage-label">{t('positional.ch3.stageLabel')}</span>
             <EmbeddingPlusPE />
           </div>
         </div>
@@ -104,13 +106,12 @@ export default function PositionalPage() {
 
       <WavyDivider className="text-ink/20 mb-10" />
 
-      {/* === 章节 4：PM 视角 === */}
       <section className="mb-12">
         <div className="mb-6 flex items-center gap-3">
           <ChapterNumber n="04" />
           <div>
-            <p className="text-sm uppercase tracking-widest text-ember-dark">PM 视角</p>
-            <h2 className="font-serif text-xl sm:text-2xl text-ink-dark">从位置编码到产品决策</h2>
+            <p className="text-sm uppercase tracking-widest text-ember-dark">{t('positional.ch4.eyebrow')}</p>
+            <h2 className="font-serif text-xl sm:text-2xl text-ink-dark">{t('positional.ch4.title')}</h2>
           </div>
         </div>
         <PMPerspectiveCards />

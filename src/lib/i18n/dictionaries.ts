@@ -363,6 +363,26 @@ const en = {
       lede:
         '"She loves him" and "He loves her" share the same set of tokens. To distinguish them, the model has to know each token\'s position. The trick (Vaswani et al., 2017): add a position-specific signal directly into each token\'s embedding vector — that way, identical tokens at different positions become different inputs.',
     },
+    ch1: {
+      title1: 'Why we need',
+      titleHighlight: 'positional encoding',
+      body: 'A direct counter-example: the exact same tokens in a different order mean something completely different. If a model can\'t see order, it can\'t tell these two sentences apart.',
+      stageLabel: 'SAME THREE WORDS, OPPOSITE MEANING →',
+    },
+    ch2: {
+      title1: 'What positional encoding actually looks like:',
+      titleHighlight: 'classic sinusoidal',
+      body:
+        "The original Transformer paper (Vaswani et al., 2017) uses sin/cos functions to generate a unique vector for each position. Plot it as a heatmap and you can see the characteristic wave pattern.",
+      stageLabel: 'A "FINGERPRINT" PER POSITION →',
+    },
+    ch3: {
+      title1: 'Adding the "fingerprint"',
+      titleHighlight: 'to the embedding',
+      body: "Positional encoding isn't fed to the model separately — it's added directly to the token embedding to produce the final input vector. That way, the same token at different positions becomes different vectors.",
+      stageLabel: 'SAME TOKEN AT DIFFERENT POSITIONS →',
+    },
+    ch4: { eyebrow: 'PRODUCT PERSPECTIVE', title: 'From positional encoding to product decisions' },
     outro: {
       body:
         'Once tokens carry position information, the Transformer can use attention to relate them to each other. That\'s where the next module — the Transformer block itself — comes in.',
@@ -381,6 +401,50 @@ const en = {
       lede:
         'Up to here, every token holds a vector that encodes "what it is" plus "where it sits." But these vectors are still independent — they don\'t know about each other. The Transformer block changes that with two operations, repeated dozens of times: self-attention (let each token query others) and a feed-forward network (process the result). After this stack, every token carries context-aware meaning.',
     },
+    ch1: {
+      title1: 'One Transformer layer =',
+      titleHighlight: 'two things',
+      body: "First, build the intuition: what is this layer actually doing? No math, no implementation details — one diagram and two everyday analogies to capture the core mechanics.",
+    },
+    ch2: {
+      title1: 'Inside attention:',
+      titleHighlight: 'Q / K / V',
+      title2: 'as three roles',
+      body: 'How does "communication" actually happen? Every token plays three roles at once: Query (what to ask), Key (where to look), Value (what to take). A concrete example walks through how the three cooperate to resolve a pronoun reference.',
+      stageLabel: 'THREE ROLES IN ACTION →',
+    },
+    ch3: {
+      titleHighlight: 'What each token "looks at"',
+      title2: ' — interactive visualization',
+      intro: 'In real sentences, attention is most interesting when handling three classes of "hard cases" — without context, a model can\'t answer any of these. The three examples below each correspond to one class; see how attention solves it:',
+      cards: [
+        { title: 'Coreference', body: 'Which earlier person/thing does a pronoun or generic noun actually refer to. Example: does "她" refer to Lucy or Mary?' },
+        { title: 'Long-range dependency', body: 'A verb\'s real object separated by a chain of modifiers. Example: "saw" one stray little black "cat".' },
+        { title: 'Contextual ambiguity', body: 'A polysemous word that needs context to disambiguate. Example: "苹果" — the fruit or the company?' },
+      ],
+      hint: 'Pick an example, hover a token, and watch its attention weights across layers — see attention go from "looking at neighbors" in layer 1 to "understanding meaning across distance" in layer 3.',
+      prereqHeading: '📚 Two terms to keep straight before interacting',
+      prereqLayerLabel: '🧱 Layer',
+      prereqLayerBody: '= a vertical processing stage — the previous layer\'s output is the next layer\'s input. The further up, the deeper the understanding.',
+      prereqHeadLabel: '🎭 Head',
+      prereqHeadBody: '= a parallel "perspective" within one layer — within a single layer, N heads look at different relationships in parallel (syntax / coreference / sentiment).',
+      prereqNote: 'The viz below shows layers (real models have 24-120; here simplified to 3, representing early / middle / deep behavior). Multiple heads per layer are averaged — this keeps the diagram to one line instead of 32.',
+      stageLabel: 'HOVER A TOKEN TO SEE ITS ATTENTION →',
+    },
+    ch4: {
+      title1: 'Feed-forward network (',
+      titleHighlight: 'FFN',
+      title2: '): each token digests on its own',
+      body: "After attention lets tokens communicate, FFN gives each token its own pass to 'think' — extracting relevant knowledge and features from its vector. Structurally much simpler than attention, but accounts for 2/3+ of total model parameters.",
+    },
+    ch5: {
+      title1: 'Wrapped in:',
+      titleHighlight: 'normalization + residual connections',
+      body: "By now you understand attention and FFN as the core mechanisms. But real models don't just chain \"attention → FFN\" directly — two layers of engineering plumbing wrap around them, and without those, networks past a few layers simply won't train.",
+      blockIntro: 'With those two concepts in hand, here\'s what they look like inside a single Block:',
+      stageLabel: 'FULL BLOCK FLOW →',
+    },
+    ch6: { eyebrow: 'PRODUCT PERSPECTIVE', title: 'From Transformer to product decisions' },
     outro: {
       body:
         'After many Transformer layers, the final token sits on a vector rich with context. The output layer then turns that vector into a probability over every word in the vocabulary.',
@@ -399,6 +463,29 @@ const en = {
       lede:
         "After the Transformer stack, the last token's vector encodes everything the model has \"figured out.\" To produce the next token, that vector goes through one final linear projection (the unembedding / LM head) — yielding a raw score (logit) for every word in the vocabulary — and then through softmax, which converts those scores into a probability distribution.",
     },
+    ch1: {
+      title1: 'From vector to',
+      titleHighlight: 'logits',
+      body: 'Turning the final-layer vector into logits hinges on one thing: the unembedding matrix. First, where this matrix comes from and how it relates to the original embedding matrix — then how to use it.',
+      section1Title: '1.1 · Where the unembedding matrix comes from, and how it relates to embedding',
+      section1Body:
+        'At the very start, an Embedding matrix translates tokens into vectors. At the very end, an Unembedding matrix reverses that — going from a vector back to the best-matching token. They are two directions of essentially the same mapping.',
+      section2Title: '1.2 · How to use the matrix to get logits',
+      section2Body: "Multiply the final-layer vector by W_U → you get a logits vector with one entry per vocabulary token. Each row of W_U acts as a \"match template\"; dot-producted with the input vector, a high score means that token fits the current context.",
+    },
+    ch2: {
+      titleHighlight: 'Softmax',
+      title2: ': turning logits into probabilities',
+      body: "Logits are arbitrary real numbers (from -∞ to +∞) — you can't use them as probabilities directly. Softmax maps them to [0, 1] and makes them sum to 1. Drag the slider to feel it.",
+      stageLabel: 'DRAG THE SLIDER TO SEE PROBABILITIES SHIFT →',
+    },
+    ch3: {
+      titleHighlight: 'End-to-end',
+      title2: ': walk through with real data',
+      body: "Pick an example to see the full pipeline: final-layer vector → unembedding → logits → softmax → probability distribution. This is exactly what the `logprobs` field in the OpenAI / Anthropic APIs is returning.",
+      stageLabel: 'FROM VECTOR TO PROBABILITY →',
+    },
+    ch4: { eyebrow: 'PRODUCT PERSPECTIVE', title: 'From logits to product decisions' },
     outro: {
       body:
         "Now we have a probability distribution over the entire vocabulary. The next step (Sampling) decides how to pick one token from this distribution.",
@@ -417,6 +504,25 @@ const en = {
       lede:
         "After steps 1–6, the model has produced one token. It detokenizes that token back into text, appends it to the input, and runs all six steps again to produce the next token. This loop continues until a stop condition triggers — and that's where most of the production-engineering knobs live: streaming, max_tokens, stop sequences, KV cache.",
     },
+    ch1: {
+      titleHighlight: 'Autoregressive loop',
+      title2: ': append each generated token and run again',
+      body: 'Pick an example and click "next token" to step through generation — each click runs one full forward pass (the first 6 modules + decoding back to text). The data reuses the greedy path from the Sampling module.',
+      stageLabel: 'CLICK TO ADVANCE ONE TOKEN AT A TIME →',
+    },
+    ch2: {
+      titleHighlight: 'Streaming',
+      title2: ': token-by-token vs all-at-once',
+      body: "Since tokens are generated one at a time, you can stream them back to the user as they're produced — or wait until generation is complete and return everything at once. Total elapsed time is the same; perceived performance is wildly different.",
+      stageLabel: 'CLICK START TO COMPARE →',
+    },
+    ch3: {
+      titleHighlight: 'max_tokens',
+      title2: ': the model gets cut off too',
+      body: "The loop doesn't run forever — either the model generates an EOS (end-of-sequence) token, or the API's max_tokens cap is reached and generation is force-stopped. The latter is the root cause of \"answer ends mid-sentence\" bugs in production.",
+      stageLabel: 'DRAG THE SLIDER TO FEEL THE TRUNCATION →',
+    },
+    ch4: { eyebrow: 'PRODUCT PERSPECTIVE', title: 'From the generation loop to product decisions' },
     outro: {
       body:
         "That's the full pipeline — input text in, one token out, repeated until done. From here, you have a complete mental model of how an LLM produces text.",
@@ -751,6 +857,25 @@ const zh = {
       lede:
         'embedding 把每个 token 变成了向量——但 Transformer 处理输入时是并行看所有 token，本身没有"先后"概念。这一步要解决的问题：让模型分得清"我打你"和"你打我"。',
     },
+    ch1: {
+      title1: '为什么需要',
+      titleHighlight: '位置编码',
+      body: '一个直观的反例：完全相同的 token，顺序不同语义就完全不同。如果模型看不到顺序，它就分不清这两句话。',
+      stageLabel: '同样三个字，意思相反 →',
+    },
+    ch2: {
+      title1: '位置编码长什么样：',
+      titleHighlight: '经典 sinusoidal',
+      body: '原始 Transformer 论文（Vaswani 2017）用 sin / cos 函数给每个位置生成一个独特向量。把它画成 heatmap，能看到典型的"波浪图案"。',
+      stageLabel: '每个位置的"指纹" →',
+    },
+    ch3: {
+      title1: '把"指纹"',
+      titleHighlight: '加到 embedding 上',
+      body: '位置编码不是单独传给模型的——它直接加到 token embedding 上，得到"最终输入向量"。这样同一个 token 在不同位置就变成了不同的向量。',
+      stageLabel: '同一个 token 在不同位置 →',
+    },
+    ch4: { eyebrow: 'PM 视角', title: '从位置编码到产品决策' },
     outro: {
       body: '现在每个 token 都带着"语义信息（embedding）"+ "位置信息（PE）"了——下一步才是 LLM 真正的"理解"环节：Transformer 用注意力机制让每个 token 看向其他相关 token，逐层抽象出复杂语义。',
       backHome: '← 回到首页',
@@ -768,6 +893,50 @@ const zh = {
       lede:
         '这是 LLM 真正"理解"输入的核心环节。一层 Transformer 主要做两件事：让 token 之间沟通（Attention），让每个 token 自己消化（FFN）。下面我们先建立这两件事的直觉，再讲它们怎么配合工作，最后讲外面包的"工程支持"。',
     },
+    ch1: {
+      title1: '一层 Transformer =',
+      titleHighlight: '两件事',
+      body: '先建立直觉：这一层在做什么。本章不讲数学、不讲实现细节——只用一张图 + 两个生活化比喻让你抓住核心机制。',
+    },
+    ch2: {
+      title1: 'Attention 内部：',
+      titleHighlight: 'Q / K / V',
+      title2: '三个角色',
+      body: 'Attention 的"沟通"具体怎么做？每个 token 同时扮演三个角色：Query（问什么）、Key（看哪里）、Value（取什么）。用一个具体例子讲清它们怎么配合解决"指代消解"。',
+      stageLabel: '三个角色的分工 →',
+    },
+    ch3: {
+      titleHighlight: '每个 token "看"哪里',
+      title2: '——互动可视化',
+      intro: '实际句子里，attention 最有意思的地方是处理三类"困难情况"——如果模型不"看上下文"，这三类问题就答不对。下面三个例子各对应一类，看看 attention 怎么解决：',
+      cards: [
+        { title: '指代消解', body: '代词或泛指词究竟指前面哪个具体的人 / 物。例：「她」指 Lucy 还是 Mary？' },
+        { title: '长距离依赖', body: '一个动词的真正对象被一堆修饰词隔开。例：「看到」一只流浪的小黑「猫」' },
+        { title: '上下文歧义', body: '一个多义词得靠上下文判断到底是哪个意思。例：「苹果」是水果还是公司？' },
+      ],
+      hint: '选个例子，鼠标悬停某个 token，看它在不同层的注意力权重分布——观察 attention 怎么从第 1 层"看邻居"逐层进化到第 3 层"跨距离理解语义"。',
+      prereqHeading: '📚 进入交互前先分清两个名词',
+      prereqLayerLabel: '🧱 层（Layer）',
+      prereqLayerBody: '= 纵向堆叠的处理阶段——前一层输出给后一层做输入。每往上一层，理解更"深"。',
+      prereqHeadLabel: '🎭 头（Head）',
+      prereqHeadBody: '= 同一层内并行的"视角"——一个层里 N 个头同时看不同关系（语法 / 指代 / 情感）。',
+      prereqNote: '下面演示的是"层"（实际模型有 24-120 层；这里简化成 3 层代表早 / 中 / 深的典型行为）。每层内部的多个头被平均了——这样图能简化到一根连线，而不是 32 根。',
+      stageLabel: '悬停 token 看连线 →',
+    },
+    ch4: {
+      title1: '前馈网络（',
+      titleHighlight: 'FFN',
+      title2: '）：每个 token 自己"消化"',
+      body: 'Attention 让 token 之间沟通后，FFN 让每个 token 单独做一遍"思考"——从自身向量里提取相关知识 / 特征。结构远比 attention 简单，但参数量占整个模型的 2/3+。',
+    },
+    ch5: {
+      title1: '外面还要包：',
+      titleHighlight: '归一化 + 残差连接',
+      body: '到这里你已经理解 Attention 和 FFN 是核心机制。但实际模型不是简单地「Attention → FFN」串起来——外面还包了两层工程支持，没有它们超过几层的网络就训不起来。',
+      blockIntro: '理解了两个概念后，看看它们在一个 Block 中具体长什么样：',
+      stageLabel: '完整 Block 流程 →',
+    },
+    ch6: { eyebrow: 'PM 视角', title: '从 Transformer 到产品决策' },
     outro: {
       body: '走完 N 层 Transformer 之后，每个 token 都被丰富的上下文信息"灌满"了。下一步：把最后一层最后一个 token 的向量映射回整个词表的概率分布——这就是输出层 / Logits。',
       backHome: '← 回到首页',
@@ -785,6 +954,28 @@ const zh = {
       lede:
         '走完 N 层 Transformer 后，每个位置都是一个 d 维向量。这一步的任务：把最后一个位置的向量映射成"下一个 token 是哪个词的概率"。数学上就两件事：① 乘以 unembedding 矩阵 → logits；② 过 softmax → 概率。',
     },
+    ch1: {
+      title1: '从向量到',
+      titleHighlight: 'Logits',
+      body: '把最后一层向量映射成 logits 的关键，是 unembedding 矩阵。先讲清楚这个矩阵从哪来、跟开头的 embedding 矩阵是什么关系——再看它怎么用。',
+      section1Title: '1.1 · Unembedding 矩阵从哪来？跟 Embedding 是什么关系？',
+      section1Body: '模型最开头有一个 Embedding 矩阵把 token 翻译成向量；最末尾有个 Unembedding 矩阵反过来，从向量找回最匹配的 token。它们其实是同一映射的两个方向。',
+      section2Title: '1.2 · 矩阵怎么用？得到 Logits',
+      section2Body: '最后一层向量乘以 W_U → 得到词表大小的 logits 向量。每一行的"匹配模板"跟向量做点积，分数高 = 这个 token 跟当前上下文匹配。',
+    },
+    ch2: {
+      titleHighlight: 'Softmax',
+      title2: '：把 logits 变成概率',
+      body: 'Logits 是任意实数（负无穷到正无穷）——不能直接当概率用。Softmax 把它们映射到 [0, 1] 区间且总和为 1。拖滑块感受一下。',
+      stageLabel: '拖滑块看概率怎么变 →',
+    },
+    ch3: {
+      titleHighlight: '完整流程',
+      title2: '：用真实数据走一遍',
+      body: '选个例子，看最后一层向量 → unembedding → logits → softmax → 概率分布整条流水线。这就是 OpenAI / Anthropic API 里 logprobs 的来源。',
+      stageLabel: '从向量到概率 →',
+    },
+    ch4: { eyebrow: 'PM 视角', title: '从 Logits 到产品决策' },
     outro: {
       body: '有了概率分布——下一步就是从中"挑一个"。直接选概率最高的（贪婪），还是按概率随机抽（多样化）？这就是 Sampling 模块要解决的问题。',
       backHome: '← 回到首页',
@@ -802,6 +993,25 @@ const zh = {
       lede:
         '前 6 个模块讲了模型前向计算的前 6 步（Tokenization → Embedding → Positional → Transformer → Logits → Sampling），只能预测下一个 token。但 LLM 输出一段话靠的是把这个 token 接回输入末尾再走一遍——这一节讲第 7 步 detokenization + 整体循环，以及它衍生的 PM 关切点：streaming 和 max_tokens。',
     },
+    ch1: {
+      titleHighlight: '自回归循环',
+      title2: '：每生成一个 token 接回去再来一遍',
+      body: '选个例子，点"下一个 token"逐步看模型的生成过程——每点一次就走完一整轮前向计算（前面 6 个模块 + 解码成文字）。数据复用 Sampling 模块的 greedy 路径。',
+      stageLabel: '点击逐 token 推进 →',
+    },
+    ch2: {
+      titleHighlight: 'Streaming',
+      title2: '：一字一字蹦出 vs 等齐了再出',
+      body: '既然 token 是一个一个生成的，那就可以一边生成一边返回给用户（streaming），或者等所有 token 都生成完一次性返回。两种模式总耗时相同，但用户感知天差地别。',
+      stageLabel: '点开始看对比 →',
+    },
+    ch3: {
+      titleHighlight: 'max_tokens',
+      title2: '：模型也会被强行打断',
+      body: '循环不会无限走下去——要么模型自己生成 EOS 结束 token，要么达到 API 设的 max_tokens 上限被强制停。后者是产品里"半句话 bug"的元凶。',
+      stageLabel: '拖滑块感受截断 →',
+    },
+    ch4: { eyebrow: 'PM 视角', title: '从生成循环到产品决策' },
     outro: {
       body: '走到这里，你已经理解了 LLM 从输入到输出的完整流水线 + 循环机制。最后一个模块是 Prompt 结构——讲 system / user / assistant 三个角色，以及 prompt 注入安全。',
       backHome: '← 回到首页',

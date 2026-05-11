@@ -47,50 +47,43 @@ export default function LogitsPage() {
 
       <WavyDivider className="text-ink/20 mb-10" />
 
-      {/* === 章节 1：Unembedding === */}
       <section className="mb-12 grid grid-cols-[auto_1fr] gap-x-4 sm:gap-x-6">
         <ChapterNumber n="01" />
         <div>
           <h2 className="font-serif text-xl sm:text-2xl text-ink-dark mb-2">
-            从向量到 <span className="relative inline-block text-ember-dark mx-0.5">Logits<SquiggleUnderline className="text-ember/70" /></span>
+            {t('logits.ch1.title1')}{' '}
+            <span className="relative inline-block text-ember-dark mx-0.5">
+              {t('logits.ch1.titleHighlight')}
+              <SquiggleUnderline className="text-ember/70" />
+            </span>
           </h2>
-          <p className="text-sm text-text-muted mb-5 max-w-prose">
-            把最后一层向量映射成 logits 的关键，是 <strong className="text-text">unembedding 矩阵</strong>。
-            先讲清楚这个矩阵从哪来、跟开头的 embedding 矩阵是什么关系——再看它怎么用。
-          </p>
+          <p className="text-sm text-text-muted mb-5 max-w-prose">{t('logits.ch1.body')}</p>
 
-          {/* 1.1 · 矩阵从哪来 */}
-          <h3 className="font-serif text-base font-semibold text-ink-dark mb-2">1.1 · Unembedding 矩阵从哪来？跟 Embedding 是什么关系？</h3>
-          <p className="text-sm text-text-muted mb-4 max-w-prose">
-            模型最开头有一个 <strong className="text-text">Embedding 矩阵</strong>把 token 翻译成向量；最末尾有个
-            <strong className="text-text"> Unembedding 矩阵</strong>反过来，从向量找回最匹配的 token。它们其实是同一映射的两个方向。
-          </p>
+          <h3 className="font-serif text-base font-semibold text-ink-dark mb-2">{t('logits.ch1.section1Title')}</h3>
+          <p className="text-sm text-text-muted mb-4 max-w-prose">{t('logits.ch1.section1Body')}</p>
           <EmbeddingUnembeddingRelation />
 
-          {/* 1.2 · 矩阵怎么用 */}
-          <h3 className="font-serif text-base font-semibold text-ink-dark mt-8 mb-2">1.2 · 矩阵怎么用？得到 Logits</h3>
-          <p className="text-sm text-text-muted mb-4 max-w-prose">
-            最后一层向量乘以 W_U → 得到词表大小的 logits 向量。每一行的"匹配模板"跟向量做点积，分数高 = 这个 token 跟当前上下文匹配。
-          </p>
+          <h3 className="font-serif text-base font-semibold text-ink-dark mt-8 mb-2">{t('logits.ch1.section2Title')}</h3>
+          <p className="text-sm text-text-muted mb-4 max-w-prose">{t('logits.ch1.section2Body')}</p>
           <UnembeddingDiagram />
         </div>
       </section>
 
       <WavyDivider className="text-ink/20 mb-10" />
 
-      {/* === 章节 2：Softmax === */}
       <section className="mb-12 grid grid-cols-[auto_1fr] gap-x-4 sm:gap-x-6">
         <ChapterNumber n="02" />
         <div>
           <h2 className="font-serif text-xl sm:text-2xl text-ink-dark mb-2">
-            <span className="relative inline-block text-ember-dark">Softmax<SquiggleUnderline className="text-ember/70" /></span>：把 logits 变成概率
+            <span className="relative inline-block text-ember-dark">
+              {t('logits.ch2.titleHighlight')}
+              <SquiggleUnderline className="text-ember/70" />
+            </span>
+            {t('logits.ch2.title2')}
           </h2>
-          <p className="text-sm text-text-muted mb-5 max-w-prose">
-            Logits 是任意实数（负无穷到正无穷）——不能直接当概率用。
-            Softmax 把它们映射到 [0, 1] 区间且总和为 1。拖滑块感受一下。
-          </p>
+          <p className="text-sm text-text-muted mb-5 max-w-prose">{t('logits.ch2.body')}</p>
           <div className="stage">
-            <span className="stage-label">拖滑块看概率怎么变 →</span>
+            <span className="stage-label">{t('logits.ch2.stageLabel')}</span>
             <SoftmaxDemo />
           </div>
         </div>
@@ -98,19 +91,19 @@ export default function LogitsPage() {
 
       <WavyDivider className="text-ink/20 mb-10" />
 
-      {/* === 章节 3：完整流程 === */}
       <section className="mb-12 grid grid-cols-[auto_1fr] gap-x-4 sm:gap-x-6">
         <ChapterNumber n="03" />
         <div>
           <h2 className="font-serif text-xl sm:text-2xl text-ink-dark mb-2">
-            <span className="relative inline-block text-ember-dark">完整流程<SquiggleUnderline className="text-ember/70" /></span>：用真实数据走一遍
+            <span className="relative inline-block text-ember-dark">
+              {t('logits.ch3.titleHighlight')}
+              <SquiggleUnderline className="text-ember/70" />
+            </span>
+            {t('logits.ch3.title2')}
           </h2>
-          <p className="text-sm text-text-muted mb-5 max-w-prose">
-            选个例子，看 <strong className="text-text">最后一层向量 → unembedding → logits → softmax → 概率分布</strong>整条流水线。
-            这就是 OpenAI / Anthropic API 里 logprobs 的来源。
-          </p>
+          <p className="text-sm text-text-muted mb-5 max-w-prose">{t('logits.ch3.body')}</p>
           <div className="stage">
-            <span className="stage-label">从向量到概率 →</span>
+            <span className="stage-label">{t('logits.ch3.stageLabel')}</span>
             <LogitsToProb />
           </div>
         </div>
@@ -118,13 +111,12 @@ export default function LogitsPage() {
 
       <WavyDivider className="text-ink/20 mb-10" />
 
-      {/* === 章节 4：PM 视角 === */}
       <section className="mb-12">
         <div className="mb-6 flex items-center gap-3">
           <ChapterNumber n="04" />
           <div>
-            <p className="text-sm uppercase tracking-widest text-ember-dark">PM 视角</p>
-            <h2 className="font-serif text-xl sm:text-2xl text-ink-dark">从 Logits 到产品决策</h2>
+            <p className="text-sm uppercase tracking-widest text-ember-dark">{t('logits.ch4.eyebrow')}</p>
+            <h2 className="font-serif text-xl sm:text-2xl text-ink-dark">{t('logits.ch4.title')}</h2>
           </div>
         </div>
         <PMPerspectiveCards />
