@@ -264,6 +264,15 @@ const en = {
       bold: 'An often-overlooked point: ',
       body: 'Top-p is usually more robust than top-k. Top-k applies a fixed cut ("keep 5"), but real distributions vary wildly — sometimes top 5 covers 99% of probability, sometimes only 60%. Top-p dynamically resizes the candidate pool based on the shape of the distribution, better reflecting "how certain the model is at this step."',
     },
+    deepDive: {
+      toggle: 'Want more sampling methods?',
+      sections: [
+        { title: 'Typical Sampling', body: 'Goes beyond raw probability — also considers whether candidate tokens have "information content" close to the average. More stable than top-p in some generation tasks. (paper link TBD · v0.1 mock)' },
+        { title: 'Min-p Sampling', body: "Uses a fraction of the top-1 probability as a dynamic cutoff threshold; more robust than fixed top-p in low-certainty scenarios. (paper link TBD · v0.1 mock)" },
+        { title: 'Repetition Penalty', body: 'Applies a penalty to the probability of already-generated tokens, mitigating loops where the model repeats the same phrase — but may hurt outputs with legitimate fixed collocations.' },
+      ],
+      externalNote: 'External: HuggingFace official docs on sampling strategies (TBD · v0.1 mock)',
+    },
     outro: {
       body:
         "You now understand how the model picks one token from a probability distribution. But it doesn't stop after one — it appends that token back, picks the next, and keeps going until the answer is complete.",
@@ -872,6 +881,15 @@ const zh = {
     pmCallout: {
       bold: '一个常被忽略的点：',
       body: 'Top-p 通常比 Top-k 更鲁棒。Top-k 是固定砍一刀（"只留 5 个"），但实际分布形态差别很大——有时 top 5 已经覆盖 99% 概率，有时 top 5 才覆盖 60%。Top-p 能根据分布形态动态调整候选池大小，更能反映"模型在这一步有多确定"。',
+    },
+    deepDive: {
+      toggle: '想了解更多 Sampling 方法？',
+      sections: [
+        { title: 'Typical Sampling', body: '不只看概率高低，还看候选词的"信息量"是否接近平均。在某些生成任务中比 top-p 更稳。（论文链接待补 · v0.1 mock）' },
+        { title: 'Min-p Sampling', body: '按 top-1 概率的某个比例作为阈值动态截断，比固定 top-p 在低确定性场景下更鲁棒。（论文链接待补 · v0.1 mock）' },
+        { title: 'Repetition Penalty', body: '对已生成过的 token 的概率施加惩罚，缓解模型反复说同一句话的问题——但可能损伤一些固定搭配的输出。' },
+      ],
+      externalNote: '外链：Hugging Face 关于采样策略的官方文档（待补 · v0.1 mock）',
     },
     outro: {
       body: '现在你已经理解了：模型如何从概率分布里挑出下一个词。但模型不是只挑一个词——它要把这个词加回去，再挑下一个，直到一段话写完。',
