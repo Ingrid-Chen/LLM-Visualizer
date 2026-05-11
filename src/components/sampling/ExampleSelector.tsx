@@ -1,17 +1,12 @@
 'use client';
 
+import { useT } from '@/lib/i18n/LangContext';
 import type { Certainty, IndexEntry } from '@/lib/types';
 
 const CATEGORY_BADGE: Record<Certainty, string> = {
   high_certainty: 'bg-ink/10 text-ink-dark border-ink/20',
   medium_certainty: 'bg-ember/15 text-ember-dark border-ember/30',
   low_certainty: 'bg-amber-100 text-amber-800 border-amber-200',
-};
-
-const CATEGORY_TEXT: Record<Certainty, string> = {
-  high_certainty: '高确定性',
-  medium_certainty: '中等确定性',
-  low_certainty: '低确定性',
 };
 
 interface Props {
@@ -21,6 +16,13 @@ interface Props {
 }
 
 export default function ExampleSelector({ examples, selectedId, onSelect }: Props) {
+  const t = useT();
+  const CATEGORY_TEXT: Record<Certainty, string> = {
+    high_certainty: t('sampling.components.exampleSelector.certaintyHigh'),
+    medium_certainty: t('sampling.components.exampleSelector.certaintyMedium'),
+    low_certainty: t('sampling.components.exampleSelector.certaintyLow'),
+  };
+
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
       {examples.map((ex) => {

@@ -1,5 +1,7 @@
 'use client';
 
+import { useT } from '@/lib/i18n/LangContext';
+
 interface Props {
   prompt: string;
   generated: string[];
@@ -10,22 +12,21 @@ interface Props {
 }
 
 export default function GeneratedTextDisplay({ prompt, generated, compact = false, trailing }: Props) {
+  const t = useT();
+  const labelText = t('sampling.components.generatedText.currentText');
+
   if (compact) {
     return (
       <div className="flex items-center gap-3 pb-3 border-b border-ink/10">
-        <span className="text-xs text-text-muted uppercase tracking-wider whitespace-nowrap">当前文本</span>
+        <span className="text-xs text-text-muted uppercase tracking-wider whitespace-nowrap">{labelText}</span>
         <p className="font-serif text-lg leading-snug flex-1 min-w-0 truncate">
           <span>{prompt}</span>
-          {generated.map((t, i) => (
+          {generated.map((tok, i) => (
             <span
               key={i}
-              className={
-                i === 0
-                  ? 'text-ink font-bold animate-[pulse_1.2s_ease-out_1]'
-                  : 'text-ember font-bold'
-              }
+              className={i === 0 ? 'text-ink font-bold animate-[pulse_1.2s_ease-out_1]' : 'text-ember font-bold'}
             >
-              {t}
+              {tok}
             </span>
           ))}
           {generated.length === 0 && <span className="text-text-muted/50 ml-1">___</span>}
@@ -37,19 +38,15 @@ export default function GeneratedTextDisplay({ prompt, generated, compact = fals
 
   return (
     <div className="rounded-lg border-2 border-cream-200 bg-cream-50 p-5">
-      <div className="text-xs text-text-muted mb-2 uppercase tracking-wider">当前文本</div>
+      <div className="text-xs text-text-muted mb-2 uppercase tracking-wider">{labelText}</div>
       <p className="text-xl font-serif leading-relaxed">
         <span>{prompt}</span>
-        {generated.map((t, i) => (
+        {generated.map((tok, i) => (
           <span
             key={i}
-            className={
-              i === 0
-                ? 'text-ink font-bold animate-[pulse_1.2s_ease-out_1]'
-                : 'text-ember font-bold'
-            }
+            className={i === 0 ? 'text-ink font-bold animate-[pulse_1.2s_ease-out_1]' : 'text-ember font-bold'}
           >
-            {t}
+            {tok}
           </span>
         ))}
       </p>

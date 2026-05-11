@@ -1,5 +1,7 @@
 'use client';
 
+import { useT } from '@/lib/i18n/LangContext';
+
 interface Props {
   demoMode: boolean;
   isAtEnd: boolean;
@@ -17,11 +19,12 @@ export default function SampleControls({
   onAdvanceDemo,
   onReset,
 }: Props) {
+  const t = useT();
   return (
     <div className="flex flex-wrap gap-3 items-center">
       {!demoMode ? (
         <button onClick={onSampleFirst} className="btn-primary text-base">
-          🎲 采样一次（按当前参数）
+          {t('sampling.components.sampleControls.sampleOnce')}
         </button>
       ) : (
         <button
@@ -29,13 +32,15 @@ export default function SampleControls({
           disabled={isAtEnd}
           className={isAtEnd ? 'btn-secondary cursor-not-allowed opacity-60' : 'btn-ember text-base'}
         >
-          {isAtEnd ? '✓ 演示已结束' : '▶ 再生成一个 token（演示）'}
+          {isAtEnd
+            ? t('sampling.components.sampleControls.demoEnded')
+            : t('sampling.components.sampleControls.advanceDemo')}
         </button>
       )}
 
       {hasGenerated && (
         <button onClick={onReset} className="btn-secondary">
-          ↺ 重置
+          {t('sampling.components.sampleControls.reset')}
         </button>
       )}
     </div>

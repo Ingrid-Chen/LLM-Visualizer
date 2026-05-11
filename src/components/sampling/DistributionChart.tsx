@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { Bar, BarChart, Cell, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 
+import { useT } from '@/lib/i18n/LangContext';
 import type { ComputedToken } from '@/lib/types';
 
 interface Props {
@@ -14,6 +15,7 @@ interface Props {
 }
 
 export default function DistributionChart({ distribution, highlightIndex, height = 260 }: Props) {
+  const t = useT();
   const [showCaveat, setShowCaveat] = useState(false);
   const data = distribution.map((d, i) => ({
     name: displayToken(d.token),
@@ -44,7 +46,7 @@ export default function DistributionChart({ distribution, highlightIndex, height
             />
             <Tooltip
               cursor={{ fill: 'rgba(44, 81, 66, 0.05)' }}
-              formatter={(value: number) => [`${(value * 100).toFixed(2)}%`, '概率']}
+              formatter={(value: number) => [`${(value * 100).toFixed(2)}%`, t('sampling.components.distChart.probabilityLabel')]}
               labelFormatter={(label, payload) => {
                 const item = payload?.[0]?.payload;
                 return item?.rawToken ?? label;
@@ -71,18 +73,16 @@ export default function DistributionChart({ distribution, highlightIndex, height
         </ResponsiveContainer>
       </div>
 
-      {/* 简化版"近似说明"——默认折叠，用户主动展开 */}
       <button
         type="button"
         onClick={() => setShowCaveat(!showCaveat)}
         className="text-[11px] text-text-muted/80 hover:text-text-muted mt-1 underline-offset-2 hover:underline"
       >
-        ⓘ 这是真实数据吗？{showCaveat ? '收起' : '展开'}
+        {showCaveat ? t('sampling.components.distChart.caveatToggleHide') : t('sampling.components.distChart.caveatToggleShow')}
       </button>
       {showCaveat && (
         <p className="text-[11px] text-text-muted mt-1.5 leading-relaxed bg-cream-100 border border-cream-200 rounded p-2">
-          展示的是 OpenAI API 返回的 <strong>top 20 候选词</strong>真实概率（temperature=1.0 调用）。
-          调温度时只在这 20 个词之间重新分配概率——完整词表的尾部分布在调高温度时会有偏差，是为教学演示做的近似。
+          {t('sampling.components.distChart.caveatBody')}
         </p>
       )}
     </div>

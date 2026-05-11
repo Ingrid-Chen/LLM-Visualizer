@@ -1,33 +1,18 @@
 'use client';
 
 import { useState } from 'react';
+import { useT } from '@/lib/i18n/LangContext';
 
 interface Props {
   temperature: number;
   topK: number | null;
   topP: number;
-  disabled: boolean; // 演示模式下整体禁用
+  disabled: boolean;
   onTemperatureChange: (v: number) => void;
   onTopKChange: (v: number | null) => void;
   onTopPChange: (v: number) => void;
 }
 
-const PARAM_HELP = {
-  temperature: {
-    short: '调整概率分布的"形状"',
-    long: '低温 = 锐化分布，模型几乎一定挑 top-1（输出确定、刻板）；高温 = 拉平分布，让低概率的词也有机会（输出更随机、有创意，但也更易胡说）。数学上是 softmax 里的一个除数。',
-  },
-  topP: {
-    short: '动态截断尾部概率（核采样）',
-    long: '把候选词按概率从高到低排，累加直到超过 p。p=0.9 就是只在覆盖 90% 概率的那批词里挑。分布越确定，被保留的词越少；分布越平，被保留的词越多。',
-  },
-  topK: {
-    short: '硬性只保留前 k 个候选词',
-    long: '不管分布形态如何，固定砍一刀只留 k 个。简单但不"自适应"——同样 top-k=5，在高确定性场景可能浪费、在低确定性场景可能太严苛。多数场景用 top-p 更鲁棒。',
-  },
-};
-
-// 参数控制面板：水平 3 列布局，嵌在 stage 内
 export default function ParamControls({
   temperature,
   topK,
@@ -37,16 +22,21 @@ export default function ParamControls({
   onTopKChange,
   onTopPChange,
 }: Props) {
+  const t = useT();
   return (
     <div className={disabled ? 'opacity-60' : ''}>
       {disabled && (
         <p className="text-sm text-ember-dark bg-ember/10 px-3 py-2 rounded leading-relaxed mb-4">
-          🔒 演示模式：温度等参数已被冻结。第二步起按预生成的 greedy 路径展示真实分布。点"重置"可回到第一步重新调参。
+          {t('sampling.components.paramControls.demoLock')}
         </p>
       )}
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6">
-        <ParamBlock label="Temperature（温度）" help={PARAM_HELP.temperature}>
+        <ParamBlock
+          label={t('sampling.components.paramControls.tempLabel')}
+          shortHelp={t('sampling.components.paramControls.tempHelpShort')}
+          longHelp={t('sampling.components.paramControls.tempHelpLong')}
+        >
           <Slider
             value={temperature}
             min={0}
@@ -55,15 +45,19 @@ export default function ParamControls({
             disabled={disabled}
             onChange={onTemperatureChange}
             marks={[
-              { value: 0.2, label: '0.2 保守' },
-              { value: 1.0, label: '1.0 默认' },
-              { value: 1.5, label: '1.5 创意' },
+              { value: 0.2, label: t('sampling.components.paramControls.tempMark0_2') },
+              { value: 1.0, label: t('sampling.components.paramControls.tempMark1') },
+              { value: 1.5, label: t('sampling.components.paramControls.tempMark1_5') },
             ]}
             format={(v) => v.toFixed(2)}
           />
         </ParamBlock>
 
-        <ParamBlock label="Top-p（核采样）" help={PARAM_HELP.topP}>
+        <ParamBlock
+          label={t('sampling.components.paramControls.topPLabel')}
+          shortHelp={t('sampling.components.paramControls.topPHelpShort')}
+          longHelp={t('sampling.components.paramControls.topPHelpLong')}
+        >
           <Slider
             value={topP}
             min={0.1}
@@ -72,18 +66,23 @@ export default function ParamControls({
             disabled={disabled}
             onChange={onTopPChange}
             marks={[
-              { value: 0.5, label: '0.5' },
-              { value: 0.9, label: '0.9 常用' },
-              { value: 1.0, label: '1.0 不启用' },
+              { value: 0.5, label: t('sampling.components.paramControls.topPMark0_5') },
+              { value: 0.9, label: t('sampling.components.paramControls.topPMark0_9') },
+              { value: 1.0, label: t('sampling.components.paramControls.topPMark1') },
             ]}
             format={(v) => v.toFixed(2)}
           />
         </ParamBlock>
 
         <ParamBlock
-          label="Top-k（候选数）"
-          help={PARAM_HELP.topK}
-          valueDisplay={topK === null ? '不启用' : `top ${topK}`}
+          label={t('sampling.components.paramControls.topKLabel')}
+          shortHelp={t('sampling.components.paramControls.topKHelpShort')}
+          longHelp={t('sampling.components.paramControls.topKHelpLong')}
+          valueDisplay={
+            topK === null
+              ? t('sampling.components.paramControls.topKOff')
+              : `${t('sampling.components.paramControls.topKValueLabel')} ${topK}`
+          }
         >
           <div className="flex flex-wrap gap-1.5">
             {[null, 1, 5, 10, 20].map((k) => (
@@ -99,7 +98,9 @@ export default function ParamControls({
                   disabled ? 'cursor-not-allowed' : '',
                 ].join(' ')}
               >
-                {k === null ? '不启用' : `top ${k}`}
+                {k === null
+                  ? t('sampling.components.paramControls.topKOff')
+                  : `${t('sampling.components.paramControls.topKValueLabel')} ${k}`}
               </button>
             ))}
           </div>
@@ -109,16 +110,16 @@ export default function ParamControls({
   );
 }
 
-// ==================== ParamBlock（每列一个） ====================
-
 interface ParamBlockProps {
   label: string;
-  help: { short: string; long: string };
+  shortHelp: string;
+  longHelp: string;
   valueDisplay?: string;
   children: React.ReactNode;
 }
 
-function ParamBlock({ label, help, valueDisplay, children }: ParamBlockProps) {
+function ParamBlock({ label, shortHelp, longHelp, valueDisplay, children }: ParamBlockProps) {
+  const t = useT();
   const [showDetail, setShowDetail] = useState(false);
   return (
     <div className="min-w-0">
@@ -127,26 +128,24 @@ function ParamBlock({ label, help, valueDisplay, children }: ParamBlockProps) {
         {valueDisplay !== undefined && <span className="text-xs text-text-muted font-mono">{valueDisplay}</span>}
       </div>
       <div className="flex items-start gap-1.5 mb-2.5">
-        <p className="text-xs text-text-muted leading-relaxed flex-1 min-w-0">{help.short}</p>
+        <p className="text-xs text-text-muted leading-relaxed flex-1 min-w-0">{shortHelp}</p>
         <button
           onClick={() => setShowDetail(!showDetail)}
           className="text-[11px] text-ink-light hover:text-ink transition-colors shrink-0 underline-offset-2 hover:underline"
           type="button"
         >
-          {showDetail ? '收起' : '了解更多'}
+          {showDetail ? t('sampling.components.paramControls.showLess') : t('sampling.components.paramControls.showMore')}
         </button>
       </div>
       {showDetail && (
         <p className="text-[11px] text-text-muted bg-cream-100 border border-cream-200 rounded p-2 mb-3 leading-relaxed">
-          {help.long}
+          {longHelp}
         </p>
       )}
       {children}
     </div>
   );
 }
-
-// ==================== Slider ====================
 
 interface SliderProps {
   value: number;

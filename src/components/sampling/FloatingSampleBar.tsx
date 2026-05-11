@@ -1,6 +1,7 @@
 'use client';
 
 import SampleControls from './SampleControls';
+import { useT } from '@/lib/i18n/LangContext';
 
 interface Props {
   visible: boolean;
@@ -22,6 +23,7 @@ export default function FloatingSampleBar({
   onAdvanceDemo,
   onReset,
 }: Props) {
+  const t = useT();
   if (!visible) return null;
 
   return (
@@ -35,7 +37,7 @@ export default function FloatingSampleBar({
         'max-w-[calc(100vw-1.5rem)]',
       ].join(' ')}
       role="region"
-      aria-label="采样操作"
+      aria-label={t('sampling.components.floatingBar.ariaLabel')}
     >
       <SampleControls
         demoMode={demoMode}
