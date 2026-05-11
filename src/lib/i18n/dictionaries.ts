@@ -255,6 +255,15 @@ const en = {
       eyebrow: 'PRODUCT PERSPECTIVE',
       title: 'Choosing parameters across product scenarios',
     },
+    pmCards: [
+      { badge: 'Customer support bot', tempVal: '0.2 – 0.4', topPVal: '0.9', rationale: "Users expect accurate, consistent answers — nobody wants the same question to return a different answer the second time." },
+      { badge: 'Creative writing assistant', tempVal: '0.8 – 1.2', topPVal: '0.95', rationale: 'Diverse output is the point; users come here actively expecting surprise.' },
+      { badge: 'Code generation', tempVal: '0 – 0.2', topPVal: '0.95', rationale: "Code that's off by a single character won't run; \"creatively correct\" code essentially doesn't exist." },
+    ],
+    pmCallout: {
+      bold: 'An often-overlooked point: ',
+      body: 'Top-p is usually more robust than top-k. Top-k applies a fixed cut ("keep 5"), but real distributions vary wildly — sometimes top 5 covers 99% of probability, sometimes only 60%. Top-p dynamically resizes the candidate pool based on the shape of the distribution, better reflecting "how certain the model is at this step."',
+    },
     outro: {
       body:
         "You now understand how the model picks one token from a probability distribution. But it doesn't stop after one — it appends that token back, picks the next, and keeps going until the answer is complete.",
@@ -303,6 +312,23 @@ const en = {
       eyebrow: 'PRODUCT PERSPECTIVE',
       title: 'From tokens to product decisions',
     },
+    pmCards: [
+      {
+        badge: 'Context window',
+        title: '"4k context" ≠ 4k Chinese characters',
+        body: "The context window is counted in tokens, not characters. GPT-4o's 128k window fits roughly 80–130k Chinese characters or 90–110k English words. When sizing a long-prompt product, estimate capacity in tokens.",
+      },
+      {
+        badge: 'Product bug',
+        title: 'Frontend truncating by character → API billing by token',
+        body: 'Classic bug: spec says "user input max 500 chars" so the frontend truncates by `string.length`. But emojis, rare characters, and CJK/Latin mixes can produce far more tokens than 500 — overrunning `max_tokens` and getting overcharged. Truncation has to go through the tokenizer.',
+      },
+      {
+        badge: 'Hidden cost',
+        title: 'Emojis are the real token hogs',
+        body: 'Decorative emojis in chat UIs look free but typically bill at 2–3 tokens each. In customer-service or social-feed style products where emojis are everywhere, they noticeably inflate API cost — more expensive than a Chinese character.',
+      },
+    ],
     outro: {
       body:
         "Once tokenized, the model maps each token to a high-dimensional vector (an embedding) so that semantically similar words sit close to each other in that space. That's what the Embedding module covers next.",
@@ -346,6 +372,23 @@ const en = {
       stageLabel: 'PICK TWO WORDS TO SEE THE ANGLE →',
     },
     ch4: { eyebrow: 'PRODUCT PERSPECTIVE', title: 'From vectors to product decisions' },
+    pmCards: [
+      {
+        badge: 'RAG basis',
+        title: 'Why RAG can "find relevant content"',
+        body: "RAG = Retrieval-Augmented Generation. Split all knowledge into passages, compute an embedding per passage, store in a vector DB. When the user asks a question, embed it too, find the passages with highest cosine similarity, and stitch them into the prompt — that's the whole magic behind giving an LLM \"instant access\" to private knowledge.",
+      },
+      {
+        badge: 'Cross-lingual',
+        title: 'Why "hello" and "你好" return the same results',
+        body: 'Modern embedding models trained on multilingual data place semantically equivalent words across languages close in vector space. That\'s the mechanism behind "ask in Chinese, retrieve English docs" — multilingual embeddings are critical for international products.',
+      },
+      {
+        badge: 'Infrastructure',
+        title: 'Why vector databases took off',
+        body: "Embeddings are 1536- or 3072-dim floats. Searching for cosine similarity over millions or billions of them needs purpose-built approximate-nearest-neighbor (ANN) indexes. Pinecone / Milvus / pgvector exist exactly for this — they're the storage layer of any RAG system.",
+      },
+    ],
     outro: {
       body:
         "Embeddings give every token a position in semantic space — but at this point the model still has no idea about word order. The next step (Positional Encoding) injects position information into these vectors.",
@@ -383,6 +426,23 @@ const en = {
       stageLabel: 'SAME TOKEN AT DIFFERENT POSITIONS →',
     },
     ch4: { eyebrow: 'PRODUCT PERSPECTIVE', title: 'From positional encoding to product decisions' },
+    pmCards: [
+      {
+        badge: 'Context window',
+        title: '"128k context" is decided by PE',
+        body: "How long an input a model can process is directly tied to PE — classic sinusoidal training fixes the max position. GPT-4o's 128k, Claude's 200k, Gemini's 1M+ contexts all trace back to evolving PE designs (RoPE and ALiBi made position extrapolation feasible).",
+      },
+      {
+        badge: 'Product phenomenon',
+        title: 'Lost in the Middle',
+        body: 'Even with a long context window, models attend to the middle of a prompt noticeably less than the start or end — a position bias from PE. RAG systems commonly put the most relevant docs first/last; placing key instructions at the end of a prompt is far more effective than burying them in the middle.',
+      },
+      {
+        badge: 'Model selection',
+        title: 'RoPE / ALiBi decide "long-context capability"',
+        body: 'Modern models almost universally use RoPE (Rotary Position Embedding) or ALiBi (linear bias) instead of classic sinusoidal — both let the model handle inputs far beyond training length. If your product needs extremely long input (legal docs, long papers), check which PE scheme the model uses.',
+      },
+    ],
     outro: {
       body:
         'Once tokens carry position information, the Transformer can use attention to relate them to each other. That\'s where the next module — the Transformer block itself — comes in.',
@@ -445,6 +505,23 @@ const en = {
       stageLabel: 'FULL BLOCK FLOW →',
     },
     ch6: { eyebrow: 'PRODUCT PERSPECTIVE', title: 'From Transformer to product decisions' },
+    pmCards: [
+      {
+        badge: 'Long-prompt phenomenon',
+        title: 'Why long prompts cause "forgetting" of earlier instructions',
+        body: 'When a prompt grows long, attention spreads weight across N positions and each one gets a thin slice. This is one cause of long-prompt forgetting — not the only one. PE extrapolation, softmax tail suppression, and training-time length distribution all play roles. Putting key instructions at the prompt\'s end and the most relevant docs at front/back are effective engineering mitigations in RAG.',
+      },
+      {
+        badge: 'Model selection',
+        title: 'How heads and layer count shape product experience',
+        body: 'More heads = attending to more angles simultaneously (syntax / semantics / coreference); more layers = deeper abstraction and longer-range associations. Both directly inflate parameter count, inference cost, and latency — which is why "lightweight" variants like GPT-4o-mini and Haiku cut heads and layers: faster, but with measurable losses in deep semantic capability.',
+      },
+      {
+        badge: 'Inference cost',
+        title: 'Layer count ≈ per-token latency',
+        body: 'Generating one token has to traverse N layers. Large LLMs run dozens to over a hundred layers (GPT-3 disclosed 96; GPT-4 / GPT-4o not officially disclosed, estimated ~120). Each layer = attention + FFN + 2 LayerNorms + 2 residuals — all sequential on GPU. More layers → longer per-token latency. Streaming improves perceived performance, but absolute reaction time is layers × per-layer time, almost linearly.',
+      },
+    ],
     outro: {
       body:
         'After many Transformer layers, the final token sits on a vector rich with context. The output layer then turns that vector into a probability over every word in the vocabulary.',
@@ -486,6 +563,23 @@ const en = {
       stageLabel: 'FROM VECTOR TO PROBABILITY →',
     },
     ch4: { eyebrow: 'PRODUCT PERSPECTIVE', title: 'From logits to product decisions' },
+    pmCards: [
+      {
+        badge: 'API transparency',
+        title: 'Logprobs API lets you see the model\'s "confidence"',
+        body: 'OpenAI and Anthropic logprobs APIs surface the real probability distribution at each position — that\'s the output of this step. Common use: gauge "how confident is the model in this answer" (top-1 prob 99% = very confident; only 30% = the model is guessing). Useful for automated evaluation and compliance review.',
+      },
+      {
+        badge: 'Inference cost',
+        title: 'Vocabulary size directly affects inference speed',
+        body: "Every generated token requires a softmax over the entire vocabulary. GPT-2's 50k vocab vs GPT-4o's 200k vocab — 4× the compute. But a bigger vocab also means finer-grained CJK / multilingual tokenization (see Tokenization chapter). It's a classic model-design trade-off.",
+      },
+      {
+        badge: 'Product capability',
+        title: 'Multilingual capability ≈ how many languages live in the vocab',
+        body: 'Characters not in the vocab get byte-level split — a typical emoji at 4 bytes or rare Chinese character at 3 bytes goes fully byte-split. When choosing a model, check vocab coverage: if your product needs Thai / Arabic / Ancient Greek, pick a model that includes them, otherwise inference cost and quality both degrade.',
+      },
+    ],
     outro: {
       body:
         "Now we have a probability distribution over the entire vocabulary. The next step (Sampling) decides how to pick one token from this distribution.",
@@ -523,6 +617,23 @@ const en = {
       stageLabel: 'DRAG THE SLIDER TO FEEL THE TRUNCATION →',
     },
     ch4: { eyebrow: 'PRODUCT PERSPECTIVE', title: 'From the generation loop to product decisions' },
+    pmCards: [
+      {
+        badge: 'Perceived performance',
+        title: 'Streaming = the canonical perceived-performance case',
+        body: "Total elapsed time doesn't change, but UX differs wildly. Whether the first token arrives fast decides the \"is the AI thinking?\" feel. Most chat products default to streaming on — users won't wait 5 seconds for a complete reply but will patiently wait 5 seconds while text streams in one character at a time.",
+      },
+      {
+        badge: 'Streaming caveat',
+        title: 'When NOT to enable streaming',
+        body: 'Cases where the full output must arrive before display: ① structured output (e.g., JSON) that must be parsed first; ② must pass profanity / safety filters before showing; ③ output will be translated / post-processed / reformatted. Streaming "half-baked" output in these cases leads to inconsistent product state.',
+      },
+      {
+        badge: 'max_tokens',
+        title: 'Origin of the "answer ends mid-sentence" bug',
+        body: 'Set max_tokens too low → the model gets cut off mid-sentence and the user sees half an answer. Backend should detect `finish_reason === "length"` and surface a friendly cue (e.g., "answer was long, send \'continue\'"). Set too high and the model occasionally pads to length — typical sweet spot is 1.5–2× expected length.',
+      },
+    ],
     outro: {
       body:
         "That's the full pipeline — input text in, one token out, repeated until done. From here, you have a complete mental model of how an LLM produces text.",
@@ -753,6 +864,15 @@ const zh = {
       eyebrow: 'PM 视角',
       title: '不同产品场景，参数选型对比',
     },
+    pmCards: [
+      { badge: '客服机器人', tempVal: '0.2 - 0.4', topPVal: '0.9', rationale: '用户期望准确、稳定的回答；不希望同一问题第二次问得到不同答复。' },
+      { badge: '创意写作助手', tempVal: '0.8 - 1.2', topPVal: '0.95', rationale: '需要多样化产出；用户主动来这里，预期会有惊喜。' },
+      { badge: '代码生成', tempVal: '0 - 0.2', topPVal: '0.95', rationale: '代码错一个字符就跑不了；几乎不存在"创意正确"的代码。' },
+    ],
+    pmCallout: {
+      bold: '一个常被忽略的点：',
+      body: 'Top-p 通常比 Top-k 更鲁棒。Top-k 是固定砍一刀（"只留 5 个"），但实际分布形态差别很大——有时 top 5 已经覆盖 99% 概率，有时 top 5 才覆盖 60%。Top-p 能根据分布形态动态调整候选池大小，更能反映"模型在这一步有多确定"。',
+    },
     outro: {
       body: '现在你已经理解了：模型如何从概率分布里挑出下一个词。但模型不是只挑一个词——它要把这个词加回去，再挑下一个，直到一段话写完。',
       backHome: '← 回到首页',
@@ -799,6 +919,23 @@ const zh = {
       eyebrow: 'PM 视角',
       title: '从 token 到产品决策',
     },
+    pmCards: [
+      {
+        badge: '上下文窗口',
+        title: '"4k 上下文"≠ 4k 中文字',
+        body: '上下文窗口是按 token 算的，不是按字。GPT-4o 的 128k 窗口装中文大约 80-130k 字，装英文大约 90-110k 词。做长 prompt 产品时，估算容量要按 token 数算。',
+      },
+      {
+        badge: '产品 Bug',
+        title: '前端按字符截断 → 模型按 token 计费',
+        body: '常见 bug：产品定义"用户输入最多 500 字"，按 string.length 截断。但 emoji / 生僻字 / 中英混合的实际 token 数可能远超 500——既超出 max_tokens 限制、又被 API 多收费。截断逻辑要按 tokenizer 算。',
+      },
+      {
+        badge: '隐藏成本',
+        title: 'Emoji 是 token 大户',
+        body: 'Chat UI 里的 emoji 装饰看着免费，实际计费时一个 emoji 通常 = 2-3 个 token。在客服 / 朋友圈风格的产品中，emoji 大量出现会显著抬高 API 成本——比一个汉字还贵。',
+      },
+    ],
     outro: {
       body: '切完 token，下一步模型就要把每个 token 映射成一个高维向量（embedding），让"语义相近的词在向量空间里距离近"。这是接下来 Embedding 模块要讲的事。',
       backHome: '← 回到首页',
@@ -841,6 +978,23 @@ const zh = {
       stageLabel: '选两个词看夹角 →',
     },
     ch4: { eyebrow: 'PM 视角', title: '从向量到产品决策' },
+    pmCards: [
+      {
+        badge: 'RAG 的基础',
+        title: '为什么 RAG 能"找到相关内容"',
+        body: 'RAG = Retrieval-Augmented Generation。把所有知识切成段落、各自算出 embedding，存进向量数据库；用户提问时把问题也算成 embedding，找余弦相似度最高的那几段拼进 prompt——这就是大模型"瞬间记住"私有知识的全部魔法。',
+      },
+      {
+        badge: '跨语言能力',
+        title: '"hello"和"你好"为什么搜出同样结果',
+        body: '现代 embedding 模型在多语言数据上训练后，不同语言里语义相同的词在向量空间里距离很近。这就是"用中文问也能查到英文文档"的底层机制——多语言 embedding 是国际化产品的关键。',
+      },
+      {
+        badge: '基础设施',
+        title: '向量数据库为什么火了',
+        body: 'embedding 是 1536 / 3072 维浮点数。要在百万、亿级规模上做余弦相似度搜索，需要专门的近似最近邻（ANN）索引。Pinecone / Milvus / pgvector 等向量数据库做的就是这件事——它们是 RAG 系统的存储基础设施。',
+      },
+    ],
     outro: {
       body: '每个 token 现在都是一个高维向量了。但 Transformer 处理输入时是"并行看所有 token"——它本身不知道谁前谁后。下一步要给每个位置加一个独特的"指纹"，让模型分得清"我打你"和"你打我"。',
       backHome: '← 回到首页',
@@ -876,6 +1030,23 @@ const zh = {
       stageLabel: '同一个 token 在不同位置 →',
     },
     ch4: { eyebrow: 'PM 视角', title: '从位置编码到产品决策' },
+    pmCards: [
+      {
+        badge: '上下文窗口',
+        title: '"128k 上下文" 是 PE 决定的',
+        body: '模型能处理多长的输入，跟 PE 直接相关——经典 sinusoidal 训练时定了多少位置就只能处理多少。GPT-4o 的 128k、Claude 的 200k、Gemini 的 1M+ 上下文，背后都是 PE 设计的演进（RoPE、ALiBi 让位置外推变得可行）。',
+      },
+      {
+        badge: '产品现象',
+        title: 'Lost in the Middle',
+        body: '即便上下文窗口够长，模型对 prompt 中间的内容关注度也明显低于开头和结尾——这是 PE 引发的位置偏置。RAG 系统中把最相关文档放最前 / 最后是常见优化策略；让 prompt 关键指令出现在结尾比埋在中间有效得多。',
+      },
+      {
+        badge: '模型选型',
+        title: 'RoPE / ALiBi 决定了"长 context 能力"',
+        body: '现代模型几乎都用 RoPE（旋转位置编码）或 ALiBi（线性偏置）替代经典 sinusoidal——它们让模型能处理远超训练长度的输入。选模型时如果产品需要超长输入（法律文书、长论文），要看模型用的是哪种 PE 方案。',
+      },
+    ],
     outro: {
       body: '现在每个 token 都带着"语义信息（embedding）"+ "位置信息（PE）"了——下一步才是 LLM 真正的"理解"环节：Transformer 用注意力机制让每个 token 看向其他相关 token，逐层抽象出复杂语义。',
       backHome: '← 回到首页',
@@ -937,6 +1108,23 @@ const zh = {
       stageLabel: '完整 Block 流程 →',
     },
     ch6: { eyebrow: 'PM 视角', title: '从 Transformer 到产品决策' },
+    pmCards: [
+      {
+        badge: '长 prompt 现象',
+        title: '为什么长 prompt 中模型会"忘"前面的指令',
+        body: '当 prompt 超长，attention 把权重分散到 N 个位置上，每个位置分到的"关注"自然就稀薄。这是长 prompt 失忆的其中一个原因——不是唯一原因。位置编码（PE）的外推能力、softmax 的尾部抑制、训练时的长度分布都有影响。RAG 系统中把关键指令放 prompt 末尾、最相关文档放前后，是有效的工程缓解。',
+      },
+      {
+        badge: '模型选型',
+        title: 'heads 和 layers 数怎么影响产品体验',
+        body: '更多 heads = 同时关注更多角度（语法 / 语义 / 指代）；更多 layers = 抽象层级更深，能建立更长距离的关联。但都直接增加参数量、推理成本和延迟——这是为什么 GPT-4o-mini / Haiku 等"轻量版"会减少 heads 和 layers，速度更快但深层语义能力会有损失。',
+      },
+      {
+        badge: '推理成本',
+        title: 'layers 数 ≈ 单 token 推理时长',
+        body: '生成一个 token 要走完 N 层。大型 LLM 估计有几十到上百层（如 GPT-3 公开是 96 层；GPT-4 / GPT-4o 未公开但业界估计 ~120 层），每层包含 attention + FFN + 两次 LayerNorm + 两次残差——这些都是 GPU 顺序执行的。模型层数越多、单 token 延迟越长。streaming 输出能让感知性能不那么差，但绝对的"模型反应时间"是 layers × 单层耗时，几乎线性。',
+      },
+    ],
     outro: {
       body: '走完 N 层 Transformer 之后，每个 token 都被丰富的上下文信息"灌满"了。下一步：把最后一层最后一个 token 的向量映射回整个词表的概率分布——这就是输出层 / Logits。',
       backHome: '← 回到首页',
@@ -976,6 +1164,23 @@ const zh = {
       stageLabel: '从向量到概率 →',
     },
     ch4: { eyebrow: 'PM 视角', title: '从 Logits 到产品决策' },
+    pmCards: [
+      {
+        badge: 'API 透明度',
+        title: 'Logprobs API 让你看到模型的"信心"',
+        body: 'OpenAI、Anthropic 的 logprobs API 让你看到模型在每个位置的真实概率分布——它就是这一步的输出。最常见的用法：判断"模型对这个回答有多有把握"（top-1 概率 99% = 很自信；只有 30% = 模型在猜）。这对自动化评估、合规审查很有用。',
+      },
+      {
+        badge: '推理成本',
+        title: '词表大小直接影响推理速度',
+        body: '每生成一个 token 都要算一次 vocab 大小的 softmax。GPT-2 的 50k 词表 vs GPT-4o 的 200k 词表——计算量翻 4 倍。但词表大也意味着更精细的中文 / 多语言切分（前面 Tokenization 章节看过）。这是模型设计的经典 trade-off。',
+      },
+      {
+        badge: '产品能力',
+        title: '多语言能力 ≈ 词表里有多少种语言',
+        body: '词表里没收录的字符会按 byte 拆——典型 emoji 一个 4 字节、生僻字一个 3 字节，全部按字节级拆开。所以选模型时看词表覆盖：如果产品要支持泰语 / 阿拉伯语 / 古希腊语，得选词表里包含的模型，否则推理成本和质量都会变差。',
+      },
+    ],
     outro: {
       body: '有了概率分布——下一步就是从中"挑一个"。直接选概率最高的（贪婪），还是按概率随机抽（多样化）？这就是 Sampling 模块要解决的问题。',
       backHome: '← 回到首页',
@@ -1012,6 +1217,23 @@ const zh = {
       stageLabel: '拖滑块感受截断 →',
     },
     ch4: { eyebrow: 'PM 视角', title: '从生成循环到产品决策' },
+    pmCards: [
+      {
+        badge: '感知性能',
+        title: 'Streaming = 感知性能的经典案例',
+        body: '总耗时不变，但用户体验差异巨大。第一个 token 是否快速到达决定"AI 是否在思考"的体感。多数对话产品默认开 streaming——用户不会等 5 秒看一个完整回答，但能耐心等 5 秒看一个一字字蹦出的回答。',
+      },
+      {
+        badge: 'Streaming 副作用',
+        title: '什么时候不该开 streaming？',
+        body: '需要"看到完整输出再展示"的场景：① 输出是 JSON 等结构化数据，必须解析完才能用；② 需要敏感词 / 安全过滤后再展示；③ 输出会被翻译 / 后处理 / 重新排版。这些场景下流式吐出来的"半成品"反而会让产品状态不一致。',
+      },
+      {
+        badge: 'max_tokens',
+        title: '"半句话 bug" 的元凶',
+        body: 'max_tokens 设小了 → 模型在句子中间硬切，用户看到"半截答案"。后端要检测 finish_reason === "length" 给用户友好提示（比如"回答较长，发送 \'继续\'"）；设大了又会偶尔被模型"凑字数"——典型 1.5-2x 预估长度。',
+      },
+    ],
     outro: {
       body: '走到这里，你已经理解了 LLM 从输入到输出的完整流水线 + 循环机制。最后一个模块是 Prompt 结构——讲 system / user / assistant 三个角色，以及 prompt 注入安全。',
       backHome: '← 回到首页',
